@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js"></script>
+
+</head>
+<body>
+    <h2>Welcome to your home page</h2>
+    <sl-button size="small">Click me</sl-button>
+    <sl-input></sl-input>
+    <sl-button>
+        <sl-icon slot="" name="gear"></sl-icon>
+        Settings
+      </sl-button>
+
+<script>
+  const input = document.querySelector('sl-input');
+  input.focus();
+</script>
+</body>
+</html>
