@@ -1,22 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="/css/style.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/style.css"
+    />
+    <!-- <link href="../../../../../dist/output.css" rel="stylesheet"> -->
     <title>User Home Page</title>
-</head>
-<body>
-    <div class="artist-list">
-        <h2>Artists</h2>
-        <form th:action="@{/users/{userId}/create(userId=${user.userId})}" method="post">
-            <div th:each="artist : ${user.artists}" class="artist-item">
-                <a th:href="@{/users/{userId}/artists/{artistId}(userId=${user.userId}, artistId=${artist.artistId})}" th:text="${artist.name}"></a>
-            </div>
-            <input type="submit" value="Create New Account"/>
-        </form>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+    </style>
+    <script th:inline="javascript">
+      var userId = [[${user.userId}]];
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <h3 class="logo-text">SoundOff</h3>
     </div>
-</body>
+    <section class="border-solid">
+      <div class="">
+          <div class="artist-bar">
+            <h2 class="">Artists</h2>
+            <button class="button-3 add-artist-button">Add New Artist</button>
+          </div>
+        <div class="artist-list">
+            <div th:each="artist : ${user.artists}" class="artist-item">
+              <a
+                      th:href="@{/users/{userId}/{artistId}(userId=${user.userId}, artistId=${artist.artistId})}"
+                      th:text="${artist.name}"
+              ></a>
+              <!--              <img th:src="@{/images/band.jpg}" alt="Band Image">-->
+            </div>
+          </div>
+      </div>
+    </section>
+    <script src="/js/user.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </body>
 </html>

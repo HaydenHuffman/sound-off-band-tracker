@@ -1,24 +1,23 @@
-<!DOCTYPE>
+<!DOCTYPE >
 <html xmlns:th="www.thymeleaf.org">
-<head>
+  <head>
     <title>Create Account</title>
-</head>
-<body>
-<h1>Create Your Account</h1>
-<form action="/register" method="post">
-    <div>
-        Username: <input th:field="${user.username}" type="text"/>
-    </div>
-    <div>
-        Password: <input th:field="${user.password}" type="password"/>
-    </div>
-    <div>
-        Full Name: <input th:field="${user.name}" type="text"/>
-    </div>
-    <div>
+    <link href="../../../../../dist/output.css" rel="stylesheet" />
+  </head>
+  <body class="flex justify-center">
+    <h1>Create Your Account</h1>
+    <br />
+    <form class="flex items-center" action="/register" method="post">
+      <div>
+        <div>Username: <input th:field="${user.username}" type="text" /></div>
+        <div>
+          Password: <input th:field="${user.password}" type="password" />
+        </div>
+        <div>Full Name: <input th:field="${user.name}" type="text" /></div>
+      </div>
+      <div>
         <button>Create</button>
-    </div>
-
-</form>
-</body>
+      </div>
+    </form>
+  </body>
 </html>

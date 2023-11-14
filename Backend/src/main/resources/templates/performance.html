@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<html xmlns:th="www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Performance</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <div>
+        <div>
+            Date: <input type="text" id="performance-date" th:field="${performance.date}" autocomplete="off" />
+        </div>
+        <div>
+            Attendance: <input type="number" id="performance-attendance" th:field="${performance.attendance}" />
+        </div>
+        <button class="button-3">Submit Changes</button>
+    </div>
+    <script src="/js/artist.js">
+    </script>
+</body>
+</html>

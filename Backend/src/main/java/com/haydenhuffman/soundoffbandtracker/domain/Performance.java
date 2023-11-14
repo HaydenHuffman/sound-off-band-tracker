@@ -1,5 +1,6 @@
 package com.haydenhuffman.soundoffbandtracker.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,5 +15,16 @@ public class Performance {
     private Integer attendance;
     @ManyToOne
     @JoinColumn(name = "artist_id")
+    @JsonBackReference
     private Artist artist;
+    private Integer perfScore;
+
+    @Override
+    public String toString() {
+        return "Performance{" +
+                "performanceId=" + performanceId +
+                ", date=" + date +
+                ", attendance=" + attendance +
+                '}';
+    }
 }
