@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
+  "scripts": {
+    "watch:tailwind": "npx tailwindcss -i ./src/main/resources/static/css/style.css -o ./src/main/resources/static/css/dist/output.css --watch"
+  },
+  "dependencies": {
+    "flatpickr": "^4.6.13"
+  }
+}

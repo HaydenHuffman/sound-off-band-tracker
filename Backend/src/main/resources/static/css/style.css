@@ -1,6 +1,6 @@
-.centered {
-
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 a {
     color: #192655;
@@ -11,7 +11,25 @@ a:hover {
     text-decoration: underline;
 }
 
+.performance-row {
+    position: relative;
+}
+
+.actions-column {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff0000; /* Red color for delete */
+}
+
 .add-artist-button {
+    margin-top: 10px;
+    margin-right: 10px;
     height: 45px;
 }
 
@@ -74,14 +92,28 @@ a:hover {
 }
 .artist-list {
     display: grid;
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+}
+
+.artist-rating {
+    width: 50px; /* Size of the square */
+    height: 50px; /* Size of the square */
+    background-color: #94d3a2; /* Background color */
+    color: white; /* Text color */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    font-size: 20px; /* Size of the text */
+    border-radius: 5px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow */
 }
 
 body {
     font-family: 'Poppins', sans-serif !important;
     background-color: #F3F0CA;
-
+    margin: 0;
+    padding: 0;
 }
 
 button {
@@ -97,9 +129,15 @@ button {
 
 }
 
-section {
-    padding: 100px;
-    margin-left: 100px;
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-container sl-input {
+ flex: 1;
+ max-width: 200px;
 }
 
 .navbar {
@@ -184,6 +222,15 @@ section {
     background-color: #298e46;
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
   }
+
+sl-button, sl-input {
+  display: none;
+}
+
+/* Show components when they are defined */
+sl-button:defined, sl-input:defined {
+  display: inline-block; /* or 'block', depending on your layout */
+}
 
   ul {
     list-style: none;

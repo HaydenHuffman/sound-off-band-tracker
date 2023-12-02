@@ -1,7 +1,6 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
-import com.haydenhuffman.soundoffbandtracker.domain.Artist;
-import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.domain.*;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +24,8 @@ public class ArtistController {
     @GetMapping("/{userId}/{artistId}")
     public String getOneArtist(@PathVariable Long userId, @PathVariable Long artistId, ModelMap model) {
         Artist artist = artistService.findById(artistId);
+        Performance performance = new Performance();
+        model.put("performance", performance);
         model.put("artist", artist);
         return "artist";
     }
@@ -44,6 +45,7 @@ public class ArtistController {
         artistService.createNewArtist(userId, artist);
         return "redirect:/users/" + userId;
     }
+
 
     @PostMapping("{userId}/{artistId}/delete")
     public String deleteArtist(@PathVariable Long userId, @PathVariable Long artistId) {

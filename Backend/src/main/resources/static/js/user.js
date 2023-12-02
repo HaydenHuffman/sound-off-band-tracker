@@ -3,39 +3,39 @@ const artistDisplay = document.querySelector('.artist-display');
 
 document.querySelector('.add-artist-button').addEventListener('click', addArtist);
 
-function addArtist() {
-    let artistName = createArtistName();
-    console.log(artistName);
-    let artist = {
-        "name": artistName,
-        "userId": userId
-    }
-    fetch("/users/" + userId + "/create", {
-        method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify(artist),
-                                            responseType: 'json'
-                                            })
-                                             .then((response) => {
-                                                    if (!response.ok) {
-                                                        throw new Error('Network response was not ok');
-                                                    }
-                                                    return response.json();
-                                                })
-                                                .then ((data) => {
-                                                        console.log(data)
-                                                        document.querySelector('.add-artist-button').value = ''
-                                                })
-                                                .catch((error) => {
-                                                    console.error('Error:', error)
-                                                })
-                                                .finally (() => {
-                                                            console.log("new artist added successfully")
-                                                })
-    location.reload()
-    }
+// function addArtist() {
+//     let artistName = createArtistName();
+//     console.log(artistName);
+//     let artist = {
+//         "name": artistName,
+//         "userId": userId
+//     }
+//     fetch("/users/" + userId + "/create", {
+//         method: 'POST',
+//                                             headers: {
+//                                                 'Content-Type': 'application/json'
+//                                             },
+//                                             body: JSON.stringify(artist),
+//                                             responseType: 'json'
+//                                             })
+//                                              .then((response) => {
+//                                                     if (!response.ok) {
+//                                                         throw new Error('Network response was not ok');
+//                                                     }
+//                                                     return response.json();
+//                                                 })
+//                                                 .then ((data) => {
+//                                                         console.log(data)
+//                                                         document.querySelector('.add-artist-button').value = ''
+//                                                 })
+//                                                 .catch((error) => {
+//                                                     console.error('Error:', error)
+//                                                 })
+//                                                 .finally (() => {
+//                                                             console.log("new artist added successfully")
+//                                                 })
+//     location.reload()
+//     }
 
 
 

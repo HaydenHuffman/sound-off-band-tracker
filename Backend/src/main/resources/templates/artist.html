@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Artist Page</title>
+    <title>[[${artist.name}]] Artist Page</title>
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+    </style>
     <script th:inline="javascript">
         var artistId = [[${artist.artistId}]];
         var userId = [[${artist.user.userId}]];
@@ -12,6 +15,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 <body class="centered">
@@ -23,64 +30,75 @@
 </div>
 <div>
     <h4>[[${artist.name}]]</h4>
+    <div class="artist-rating">
+        <span th:text="${artist.aggScore}"></span>
+    </div>
 </div>
 <div>
     <form class="artist-edit"
           th:action="@{/users/{userId}/{artistId}(userId=${artist.user.userId}, artistId=${artist.artistId})}"
           method="post">
-        <div class="artist-field">Name: <input type="text" th:field="${artist.name}"/></div>
+        <div class="artist-field">Name: <sl-input type="text" th:field="${artist.name}" placeholder="Edit Artist Name"></sl-input></div>
         <div class="artist-field">Image: <input type="file" th:field="${artist.image}"/></div>
         <input type="hidden" th:field="${artist.user.userId}"/>
-        <button class="button-3" onClick="submitForm()">Confirm changes</button>
+        <sl-button class="" onClick="submitForm()">Confirm changes</sl-button>
     </form>
     <form class="artist-delete"
           th:action="@{/users/{userId}/{artistId}/delete(userId=${artist.user.userId}, artistId=${artist.artistId})}"
           method="post">
-        <button class="button-3">Delete Artist</button>
+        <sl-button type="submit">Delete Artist</sl-button>
     </form>
-    <form>
-        <div>
-            Date: <input type="text" id="performance-date" autocomplete="off"/>
-        </div>
-        <div>
-            Attendance: <input type="number" id="performance-attendance"/>
-        </div>
+    <form th:action="@{/users/{userId}/{artistId}/add(userId=${artist.user.userId}, artistId=${artist.artistId})}" method="post">
+        <sl-input type="text" th:field="${performance.date}" class="datepicker" autocomplete="off" placeholder="Select Date"></sl-input>
+        <sl-input type="number" th:field="${performance.attendance}" id="performance-attendance" placeholder="Attendance"></sl-input>
         <input type="hidden" th:field="${artist.artistId}"/>
-        <button class="button-3 add-performance-button">
+        <sl-button type="submit" class="add-performance-button">
             Add New Performance
-        </button>
+        </sl-button>
     </form>
-    <div class="artist-performance-display">
         <table class="artist-performance-table">
             <thead>
                 <tr>
                     <th>Date</th>
                     <th>Attendance</th>
                     <th>Rating</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody class="display-item" th:each="performance : ${artist.performances}">
-                <tr>
-                    <td>[[${performance.date}]]</td>
-                    <td>[[${performance.attendance}]]</td>
-                    <td>[[${performance.perfScore}]]</td>
-
-                </tr>
+            <tbody class="display-item" th:each="performances : ${artist.performances}">
+                    <tr>
+                        <td>[[${performances.date}]]</td>
+                        <td>[[${performances.attendance}]]</td>
+                        <td>[[${performances.perfScore}]]</td>
+                        <td class="actions-column">
+                            <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+                                <sl-button type="submit">Delete</sl-button>
+                            </form>
+                            <sl-button class="edit-btn">Edit</sl-button>
+                        </td>
+                    </tr>
             </tbody>
         </table>
-
-
-
-<!--        <div class="display-item" th:each="performance : ${artist.performances}">-->
-<!--            <a th:href="@{/users/{userId}/{artistId}/{performanceId}-->
-<!--               (userId=${artist.user.userId}, artistId=${artist.artistId}, performanceId=${performance.performanceId})}"-->
-<!--               th:text="${performance.date}"-->
-<!--            ></a>-->
-<!--        </div>-->
-
+        <div id="edit-form" style="">
+            <sl-input type="text" id="edit-date" placeholder="Date"></sl-input>
+            <sl-input type="text" id="edit-performance" placeholder="Attendance"></sl-input>
+            <sl-button onclick="submitEdit()">Submit</sl-button>
+            <sl-button onclick="closeEditForm()">Cancel</sl-button>
+        </div>
     </div>
+
+
+
+    <!--        <div class="display-item" th:each="performance : ${artist.performances}">-->
+    <!--            <a th:href="@{/users/{userId}/{artistId}/{performanceId}-->
+    <!--               (userId=${artist.user.userId}, artistId=${artist.artistId}, performanceId=${performance.performanceId})}"-->
+    <!--               th:text="${performance.date}"-->
+    <!--            ></a>-->
+    <!--        </div>-->
+
 </div>
-<script src="/js/artist.js">
+<script type="module" src="/js/artist.js">
 </script>
 </body>
 </html>

@@ -1,33 +1,23 @@
-//function getArtistIdFromUrl() {
-//    let currentUrl = window.location.href;
-//    let segments = currentUrl.split('/');
-//    let artistId = segments[segments.length - 1];
-//    console.log(artistId);
-//    return artistId;
-//
-//}
-//
-//function getUserIdFromUrl() {
-//    let currentUrl = window.location.href;
-//    let segments = currentUrl.split('/');
-//    let userId = segments[segments.length - 2];
-//    console.log(userId);
-//    return userId;
-//}
-//
-//let artistId = getArtistIdFromUrl();
-//let userId = getUserIdFromUrl();
 
-console.log(artistId);
-console.log(userId);
 
-function submitForm() {
-    let form = document.querySelector('.artist-edit')
-    form.action = "/users/" + userId + "/" + artistId;
-    form.submit();
-    }
+document.addEventListener('DOMContentLoaded', () => {
 
-document.querySelector('.add-performance-button').addEventListener('click', addPerformance);
+    const slInput = document.querySelector('.datepicker');
+    flatpickr('.datepicker', {
+        onChange: function(selectedDates, dateStr, instance) {
+            slInput.value = dateStr;
+        }
+    })
+})
+
+
+// function submitForm() {
+//     let form = document.querySelector('.artist-edit')
+//     form.action = "/users/" + userId + "/" + artistId;
+//     form.submit();
+//     }
+
+// document.querySelector('.add-performance-button').addEventListener('click', addPerformance);
 
 function getDayOfWeekScore(dateString) {
     const date = new Date(dateString);
@@ -38,53 +28,69 @@ function getDayOfWeekScore(dateString) {
 }
 
 
-function addPerformance(event) {
-//        event.preventDefault();   // Used for debugging to ensure peformance posts correctly
-let date = document.querySelector('#performance-date').value
-let formattedDate = formatDateForJava(date)
-let attendance = document.querySelector('#performance-attendance').value
-        console.log(artistId)
-        let perfScore = attendance * getDayOfWeekScore(date)
-        console.log(perfScore)
-        let performance = {
-            "date": formattedDate,
-            "attendance": attendance,
-            "perfScore": perfScore,
-            "artistId": artistId
-        }
-        fetch(artistId + '/add',
-                    {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(performance),
-                    responseType: 'json'
-                    })
-        .then((response) => {
-            if (!response.ok){
-                throw new Error('Network response was not ok')
-            }
-            return response.json();
-            })
-//            .then((data) => {
-//                console.log(data)})
-            .finally( () => {
-                date.value = ''
-                attendance = ''
-            })
-        }
+// function addPerformance(event) {
+// let date = document.querySelector('#performance-date').value
+// let formattedDate = formatDateForJava(date)
+// let attendance = document.querySelector('#performance-attendance').value
+//         console.log(artistId)
+//         let perfScore = attendance * getDayOfWeekScore(date)
+//         console.log(perfScore)
+//         let performance = {
+//             "date": formattedDate,
+//             "attendance": attendance,
+//             "perfScore": perfScore,
+//             "artistId": artistId
+//         }
+//         fetch(artistId + '/add',
+//                     {
+//                     method: 'POST',
+//                     headers: {
+//                     'Content-Type': 'application/json'
+//                     },
+//                     body: JSON.stringify(performance),
+//                     responseType: 'json'
+//                     })
+//         .then((response) => {
+//             if (!response.ok){
+//                 throw new Error('Network response was not ok')
+//             }
+//             return response.json();
+//             })
+//             .finally( () => {
+//                 date.value = ''
+//                 attendance = ''
+//             })
+//         }
 
- $(document).ready(function() {
-    $("#performance-date").datepicker();
-  });
+//  $(document).ready(function() {
+//     $("#performance-date").datepicker();
+//   });
 
 
-function formatDateForJava(dateString) {
-    const [month, day, year] = dateString.split('/');
-    const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    return formattedDate;
+// function formatDateForJava(dateString) {
+//     const [month, day, year] = dateString.split('/');
+//     const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+//     return formattedDate;
+// }
+
+let editBtn = document.querySelector('.edit-btn');
+
+editBtn.addEventListener('click', function () {
+        let row = this.closest('tr');
+        let date = row.cells[0].innerText;
+        let attendance = row.cells[1].innerText;
+
+        document.getElementById('edit-date').value = date;
+        document.getElementById('edit-attendance').value = attendance;
+
+        document.getElementById('edit-form').style.display = 'block';
+    })
+
+function submitEdit() {
+    // add logic to submit form
+    document.getElementById('edit-form').style.display = 'none';
 }
 
-
-
+function closeEditForm() {
+    document.getElementById('edit-form').style.display = 'none';
+}

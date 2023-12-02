@@ -31,4 +31,8 @@ public class PerformanceService {
     public Performance findById(Long performanceId) {
         return performanceRepository.findById(performanceId).orElse(new Performance());
     }
+
+    public void deleteById(Long performanceId) {
+        performanceRepository.deleteById(performanceId);
+    }
 }
