@@ -73,24 +73,4 @@ function getDayOfWeekScore(dateString) {
 //     return formattedDate;
 // }
 
-let editBtn = document.querySelector('.edit-btn');
 
-editBtn.addEventListener('click', function () {
-        let row = this.closest('tr');
-        let date = row.cells[0].innerText;
-        let attendance = row.cells[1].innerText;
-
-        document.getElementById('edit-date').value = date;
-        document.getElementById('edit-attendance').value = attendance;
-
-        document.getElementById('edit-form').style.display = 'block';
-    })
-
-function submitEdit() {
-    // add logic to submit form
-    document.getElementById('edit-form').style.display = 'none';
-}
-
-function closeEditForm() {
-    document.getElementById('edit-form').style.display = 'none';
-}
