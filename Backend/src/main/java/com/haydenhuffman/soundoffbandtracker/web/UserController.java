@@ -1,23 +1,30 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
+import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
     private UserService userService;
+    private ArtistService artistService;
 
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ArtistService artistService) {
         this.userService = userService;
+        this.artistService = artistService;
     }
 
     @GetMapping("/register")
@@ -34,10 +41,17 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public String findById(@PathVariable Long userId, ModelMap model) {
+    public String getUserById(@PathVariable Long userId, ModelMap model) {
          User user = userService.findById(userId);
          model.put("user", user);
          return "user";
+    }
+
+    @GetMapping("/{userId}/top-artists")
+    public String getUsersTopArtists(@PathVariable Long userId, Model model) {
+        List<Artist> topArtists = artistService.findTopArtists(userId);
+        model.addAttribute("topArtists", topArtists);
+        return "top-artists";
     }
 
     @GetMapping("/home/{userId}")

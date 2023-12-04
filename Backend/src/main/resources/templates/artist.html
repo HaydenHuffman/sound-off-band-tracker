@@ -15,20 +15,21 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css" />
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/shoelace-autoloader.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css"/>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
-<body class="centered">
+<body>
 <div class="navbar">
     <h3 class="logo-text">SoundOff</h3>
     <ul>
         <li><a th:href="@{/users/{userId}(userId=${artist.user.userId})}">Home</a></li>
     </ul>
 </div>
-<div>
+<div style="display:flex;flex-direction:row;">
     <h4>[[${artist.name}]]</h4>
     <div class="artist-rating">
         <span th:text="${artist.aggScore}"></span>
@@ -38,7 +39,7 @@
     <form class="artist-edit"
           th:action="@{/users/{userId}/{artistId}(userId=${artist.user.userId}, artistId=${artist.artistId})}"
           method="post">
-        <div class="artist-field">Name: <sl-input type="text" th:field="${artist.name}" placeholder="Edit Artist Name"></sl-input></div>
+        <div class="artist-field"><input type="text" th:field="${artist.name}" placeholder="Edit Artist Name"/></div>
         <div class="artist-field">Image: <input type="file" th:field="${artist.image}"/></div>
         <input type="hidden" th:field="${artist.user.userId}"/>
         <button class="" onClick="submitForm()">Confirm changes</button>
@@ -48,7 +49,9 @@
           method="post">
         <button type="submit">Delete Artist</button>
     </form>
-    <form th:action="@{/users/{userId}/{artistId}/add(userId=${artist.user.userId}, artistId=${artist.artistId})}" th:object="${performance}" method="post">
+    <form style="display:flex;flex-direction:column;"
+          th:action="@{/users/{userId}/{artistId}/add(userId=${artist.user.userId}, artistId=${artist.artistId})}"
+          th:object="${performance}" method="post">
         <input type="text" th:field="*{date}" class="datepicker" autocomplete="off" placeholder="Select Date"/>
         <input type="number" th:field="*{attendance}" id="performance-attendance" placeholder="Attendance"/>
         <input type="hidden" th:field="${artist.artistId}"/>
@@ -56,49 +59,75 @@
             Add New Performance
         </button>
     </form>
+    <div class=".table-container">
         <table class="artist-performance-table">
             <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Attendance</th>
-                    <th>Rating</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Date</th>
+                <th>Attendance</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
             </thead>
-            <tbody class="display-item" th:each="performance : ${artist.performances}">
-                    <tr>
-                        <td>[[${performance.date}]]</td>
-                        <td>[[${performance.attendance}]]</td>
-                        <td>[[${performance.perfScore}]]</td>
-                        <td class="actions-column">
-                            <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
+            <tbody th:each="performance : ${artist.performances}">
+            <tr class="display-item">
+                <td>[[${performance.date}]]</td>
+                <td>[[${performance.attendance}]]</td>
+                <td>[[${performance.perfScore}]]</td>
+                <td class="actions-column">
+                    <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
                             artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
-                                <button type="submit">Delete</button>
-                            </form>
-                            <button class="edit-btn">Edit</button>
-                        </td>
-                    </tr>
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form th:action="@{/users/{userId}/{artistId}/{performanceId}(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="get">
+                        <button class="edit-btn">Edit</button>
+                    </form>
+                </td>
+            </tr>
             </tbody>
         </table>
-        <div id="edit-form" style="">
-            <input type="text" id="edit-date" placeholder="Date"/>
-            <input type="text" id="edit-performance" placeholder="Attendance"/>
-            <button onclick="submitEdit()">Submit</button>
-            <button onclick="closeEditForm()">Cancel</button>
-        </div>
     </div>
 
+</div>
 
 
-    <!--        <div class="display-item" th:each="performance : ${artist.performances}">-->
-    <!--            <a th:href="@{/users/{userId}/{artistId}/{performanceId}-->
-    <!--               (userId=${artist.user.userId}, artistId=${artist.artistId}, performanceId=${performance.performanceId})}"-->
-    <!--               th:text="${performance.date}"-->
-    <!--            ></a>-->
-    <!--        </div>-->
+<!--        <div class="display-item" th:each="performance : ${artist.performances}">-->
+<!--            <a th:href="@{/users/{userId}/{artistId}/{performanceId}-->
+<!--               (userId=${artist.user.userId}, artistId=${artist.artistId}, performanceId=${performance.performanceId})}"-->
+<!--               th:text="${performance.date}"-->
+<!--            ></a>-->
+<!--        </div>-->
 
 </div>
-<script type="module" src="/js/artist.js">
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const slInput = document.querySelector('.datepicker');
+        flatpickr('.datepicker', {
+            onChange: function(selectedDates, dateStr, instance) {
+                slInput.value = dateStr;
+            }
+        })
+    })
+
+    document.addEventListener('DOMContentLoaded', function() {
+       const dateInput = document.querySelector('.datepicker');
+       const attendanceInput = document.querySelector('#performance-attendance');
+       const submitButton = document.querySelector('.add-performance-button');
+
+       // Initially disable the submit button
+       submitButton.disabled = true;
+
+       // Function to check both inputs
+       function updateButtonState() {
+           submitButton.disabled = !dateInput.value || !attendanceInput.value;
+       }
+
+       // Event listeners for both inputs
+       dateInput.addEventListener('input', updateButtonState);
+       attendanceInput.addEventListener('input', updateButtonState);
+   });
 </script>
 </body>
 </html>

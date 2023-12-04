@@ -31,15 +31,13 @@ public class ArtistController {
     }
 
     @PostMapping("/{userId}/{artistId}")
-    public String postOneArtist(@PathVariable Long userId, @ModelAttribute Artist artist) {
-
+    public String updateOneArtist(@PathVariable Long userId, @ModelAttribute Artist artist) {
         artistService.save(artist);
-        return "redirect:/users/" + userId;
+        return "redirect:/users/" + userId + "/" + artist.getArtistId();
     }
 
     @PostMapping("/{userId}/create")
-    @ResponseBody
-    public String createNewArtist (@PathVariable Long userId, @RequestBody Artist artist) throws IOException, InterruptedException {
+    public String createNewArtist (@PathVariable Long userId, @ModelAttribute Artist artist) throws IOException, InterruptedException {
         User user = userService.findById(userId);
         artist.setUser(user);
         artistService.createNewArtist(userId, artist);

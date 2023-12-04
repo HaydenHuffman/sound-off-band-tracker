@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Artists</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="table-container">
+    <table class="artist-performance-table top-artist-table">
+        <thead>
+        <tr>
+            <th>Artist Name</th>
+            <th>Aggregated Score</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody th:each="artist : ${topArtists}">
+        <tr class="display-item">
+            <td>[[${artist.name}]]</td>
+            <td>[[${artist.aggScore}]]</td>
+            <td class="actions-column">
+                <a th:href="@{/users/{userId}/{artistId}(userId=${artist.user.userId},
+                            artistId=${artist.artistId})}">View Details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

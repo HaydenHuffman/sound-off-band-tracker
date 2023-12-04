@@ -12,15 +12,20 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
-    <div>
+    <form th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
         <div>
-            Date: <input type="text" id="performance-date" th:field="${performance.date}" autocomplete="off" />
+            <input type="text" id="performance-date" th:field="${performance.date}" placeholder="Edit Date" autocomplete="off" />
         </div>
         <div>
-            Attendance: <input type="number" id="performance-attendance" th:field="${performance.attendance}" />
+            <input type="number" id="performance-attendance" th:field="${performance.attendance}" placeholder="Edit Attendance Count" />
         </div>
-        <button class="button-3">Submit Changes</button>
-    </div>
+        <input type="hidden" th:field="${performance.artist.artistId}" />
+        <input type="hidden" th:field="${performance.perfScore}" />
+
+
+        <button class="">Submit Changes</button>
+    </form>
     <script src="/js/artist.js">
     </script>
 </body>

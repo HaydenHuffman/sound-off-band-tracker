@@ -10,8 +10,8 @@ public class Performance {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long performanceId;
     private LocalDate date;
-    private Integer attendance;
-    @ManyToOne
+    private Double attendance;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "artist_id")
     @JsonBackReference
     private Artist artist;
@@ -33,10 +33,10 @@ public class Performance {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    public Integer getAttendance() {
+    public Double getAttendance() {
         return attendance;
     }
-    public void setAttendance(Integer attendance) {
+    public void setAttendance(Double attendance) {
         this.attendance = attendance;
     }
     public Artist getArtist() {

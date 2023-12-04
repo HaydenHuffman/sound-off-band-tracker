@@ -4,6 +4,7 @@ import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -19,16 +20,21 @@ public class PerformanceService {
         this.performanceRepository = performanceRepository;
         this.artistService = artistService;
     }
-    public Performance save(Performance performance) {
+    @Transactional
+    public void save(Performance performance) {
+        performance.setPerfScore(performance.getAttendance() * getDayOfWeekScore(performance.getDate()));
         performanceRepository.save(performance);
-        return performance;
+        performance.getArtist().setAggScore(artistService.calculateAggScore(performance.getArtist()));
     }
 
     public void createPerformance(Performance performance, Long artistId) {
         Artist currentArtist = artistService.findById(artistId);
-        performance.setPerfScore(performance.getAttendance() * getDayOfWeekScore(performance.getDate()));
+        double score = performance.getAttendance() * getDayOfWeekScore(performance.getDate());
+        score = Math.round(score * 10.0) / 10.0; // Rounding to 1 decimal place
+        performance.setPerfScore(score);
         performance.setArtist(currentArtist);
         currentArtist.getPerformances().add(performance);
+        artistService.updateArtistAggScore(currentArtist);
         performanceRepository.save(performance);
 
     }

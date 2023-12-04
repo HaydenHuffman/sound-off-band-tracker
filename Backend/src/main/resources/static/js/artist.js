@@ -28,6 +28,8 @@ function getDayOfWeekScore(dateString) {
 }
 
 
+document
+
 // function addPerformance(event) {
 // let date = document.querySelector('#performance-date').value
 // let formattedDate = formatDateForJava(date)

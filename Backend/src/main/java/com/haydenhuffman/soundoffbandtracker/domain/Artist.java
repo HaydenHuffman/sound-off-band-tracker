@@ -4,11 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Artist {
@@ -17,7 +13,7 @@ public class Artist {
     private Long artistId;
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Performance> performances;
     @JsonBackReference
     @ManyToOne
@@ -70,10 +66,7 @@ public class Artist {
     }
 
     public Double getAggScore() {
-        if (performances == null || performances.isEmpty()) {
-            return 0.0;
-        }
-        return calculateAverageRating() * (1 + (1 / daysSinceLastPerformance()));
+        return aggScore;
     }
 
     public void setAggScore(Double aggScore) {
@@ -88,34 +81,7 @@ public class Artist {
                 ", performances=" + performances +
                 ", user=" + user +
                 ", image='" + image + '\'' +
-                ", aggScore=" + aggScore +
+//                ", aggScore=" + aggScore +
                 '}';
-    }
-
-    public Double calculateAverageRating() {
-        if (performances == null || performances.isEmpty()) {
-        return 0.0;
-        }
-        double totalRating = performances.stream()
-                .map(Performance::getPerfScore)
-                .filter(Objects::nonNull)
-                .mapToDouble(perfScore -> perfScore)
-                .average()
-                .orElse(0.0);
-
-        return totalRating;
-    }
-
-    public Long daysSinceLastPerformance() {
-        if (performances == null || performances.isEmpty()) {
-            return 0L;
-        }
-
-        return performances.stream()
-                        .filter(performance -> performance.getDate() != null)
-                        .max(Comparator.comparing(Performance::getDate))
-                        .map(Performance::getDate)
-                        .map(date -> ChronoUnit.DAYS.between(date, LocalDate.now()))
-                        .orElse(0L);
     }
 }
