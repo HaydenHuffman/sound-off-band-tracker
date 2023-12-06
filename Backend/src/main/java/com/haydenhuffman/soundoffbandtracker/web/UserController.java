@@ -3,7 +3,7 @@ package com.haydenhuffman.soundoffbandtracker.web;
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
-import com.haydenhuffman.soundoffbandtracker.service.UserService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,11 +18,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private UserServiceImpl userService;
     private ArtistService artistService;
 
 
-    public UserController(UserService userService, ArtistService artistService) {
+    public UserController(UserServiceImpl userService, ArtistService artistService) {
         this.userService = userService;
         this.artistService = artistService;
     }
@@ -50,6 +50,7 @@ public class UserController {
     @GetMapping("/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
         List<Artist> topArtists = artistService.findTopArtists(userId);
+        model.addAttribute("user", userService.findById(userId));
         model.addAttribute("topArtists", topArtists);
         return "top-artists";
     }

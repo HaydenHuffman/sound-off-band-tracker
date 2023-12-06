@@ -6,27 +6,47 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Performance</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+    </style>
 </head>
 <body>
-    <form th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
+<div class="navbar">
+    <h3 class="logo-text text-xl">SoundOff</h3>
+    <a style="margin-left:15px;" th:href="@{/users/{userId}(userId=${user.userId})}">Home</a>
+</div>
+    <form class="edit-form" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
                             artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
-        <div>
-            <input type="text" id="performance-date" th:field="${performance.date}" placeholder="Edit Date" autocomplete="off" />
+        <div class="artist-field">
+            <input class="datepicker" type="text" id="performance-date" th:field="${performance.date}" placeholder="Edit Date" autocomplete="off" />
         </div>
-        <div>
+        <div class="artist-field">
             <input type="number" id="performance-attendance" th:field="${performance.attendance}" placeholder="Edit Attendance Count" />
         </div>
         <input type="hidden" th:field="${performance.artist.artistId}" />
         <input type="hidden" th:field="${performance.perfScore}" />
 
-
-        <button class="">Submit Changes</button>
+        <div style="display:flex;flex-direction:row;">
+            <button class="">Submit Changes</button>
+            <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
     </form>
     <script src="/js/artist.js">
+        document.addEventListener('DOMContentLoaded', () => {
+
+       const slInput = document.querySelector('.datepicker');
+       flatpickr('.datepicker', {
+           onChange: function(selectedDates, dateStr, instance) {
+               slInput.value = dateStr;
+           }
+       })
+   })
     </script>
 </body>
 </html>
