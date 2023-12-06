@@ -1,9 +1,10 @@
 package com.haydenhuffman.soundoffbandtracker.security;
 
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.RefreshTokenRequest;
-import com.coderscampus.SpringSecurityJWTDemo.service.RefreshTokenService;
-import com.coderscampus.SpringSecurityJWTDemo.service.UserServiceImpl;
-import com.coderscampus.SpringSecurityJWTDemo.util.CookieUtils;
+
+import com.haydenhuffman.soundoffbandtracker.dao.request.RefreshTokenRequest;
+import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.util.CookieUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

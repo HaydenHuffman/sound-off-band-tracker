@@ -17,6 +17,8 @@
 <div class="navbar">
     <h3 class="logo-text text-xl">SoundOff</h3>
     <a style="margin-left:15px;" th:href="@{/users/{userId}(userId=${user.userId})}">Home</a>
+    <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
+
 </div>
     <form class="edit-form" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
                             artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">

@@ -46,6 +46,22 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
 }
 
+.create-account-button {
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        height: 40px;
+        width: 100px;
+        border-radius: 5px;
+        background-color: #192655;
+        color: #fafafa;
+        font-family:inherit;
+        font-size: .75em;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+
 button:hover {
     color: #192655;
     background-color: #fafafa;
@@ -87,6 +103,12 @@ input {
     justify-content: space-between;
 }
 
+.artist-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .artist-item {
      display: flex;
      align-items: center;
@@ -94,7 +116,7 @@ input {
      margin: 10px;
      padding: 10px;
      border: 1px solid #ddd;
-     border-radius: 10px;
+     border-radius: 50px;
      height: 100px;
      width: 80%;
      background-color: #cfcfcf;
@@ -147,16 +169,17 @@ input {
 }
 
 .artist-rating {
-    width: 50px; /* Size of the square */
-    height: 50px; /* Size of the square */
-    background-color: #94d3a2; /* Background color */
-    color: white; /* Text color */
+    width: 100px;
+    height: 100px;
+    background-color: #192655;
+    color: white;
     display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    font-size: 20px; /* Size of the text */
-    border-radius: 5px; /* Slightly rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .delete-icon {
@@ -210,6 +233,11 @@ input {
     width: 100%;
     color: #192655;
     align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    margin-right: 10px;
 }
 
 .logo-text {

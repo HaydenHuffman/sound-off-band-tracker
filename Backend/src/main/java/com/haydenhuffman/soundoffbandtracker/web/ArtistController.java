@@ -38,16 +38,9 @@ public class ArtistController {
 
     @PostMapping("/{userId}/{artistId}")
     public String updateOneArtist(@PathVariable Long userId,
-                                  @ModelAttribute Artist artist,
-                                  @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        if (!imageFile.isEmpty()) {
-            String imagePath = StringUtils.cleanPath(imageFile.getOriginalFilename());
-            if (imagePath.contains("..")){
-                System.out.println("not a valid file");
-            }
-            artist.setImage(Arrays.toString(Base64.getEncoder().encode(imageFile.getBytes())));
+                                  @ModelAttribute Artist artist) throws IOException {
 
-        }
+
         artistService.save(artist);
         return "redirect:/users/" + userId + "/" + artist.getArtistId();
     }

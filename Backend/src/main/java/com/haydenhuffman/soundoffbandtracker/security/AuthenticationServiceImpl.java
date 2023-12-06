@@ -1,14 +1,15 @@
 
 package com.haydenhuffman.soundoffbandtracker.security;
 
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.SignInRequest;
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.SignUpRequest;
-import com.coderscampus.SpringSecurityJWTDemo.dao.response.JwtAuthenticationResponse;
-import com.coderscampus.SpringSecurityJWTDemo.domain.Authority;
-import com.coderscampus.SpringSecurityJWTDemo.domain.Role;
-import com.coderscampus.SpringSecurityJWTDemo.domain.User;
-import com.coderscampus.SpringSecurityJWTDemo.repository.UserRepository;
-import com.coderscampus.SpringSecurityJWTDemo.service.RefreshTokenService;
+
+import com.haydenhuffman.soundoffbandtracker.dao.request.SignInRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.request.SignUpRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.response.JwtAuthenticationResponse;
+import com.haydenhuffman.soundoffbandtracker.domain.Authority;
+import com.haydenhuffman.soundoffbandtracker.domain.Role;
+import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
+import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RefreshTokenService refreshTokenService;
     
     public AuthenticationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-            JwtService jwtService, AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService) {
+                                     JwtService jwtService, AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService) {
         super();
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -64,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         request.authorityOpt().ifPresent(auth -> user.getAuthorities().add(new Authority(auth, user)));
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
-        var refreshToken = refreshTokenService.createRefreshToken(user.getId());
+        var refreshToken = refreshTokenService.createRefreshToken(user.getUserId());
         
         String encodedPassword = passwordEncoder.encode(request.password());
         logger.error("Raw Password: {}, Encoded Password: {}", request.password(), encodedPassword);
@@ -87,7 +88,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (refreshTokenOpt.isPresent()) {
             return new JwtAuthenticationResponse(jwt, refreshTokenOpt.get().getToken()); 
         } else {
-            return new JwtAuthenticationResponse(jwt, refreshTokenService.createRefreshToken(user.getId()).getToken());
+            return new JwtAuthenticationResponse(jwt, refreshTokenService.createRefreshToken(user.getUserId()).getToken());
         }
     }
 }

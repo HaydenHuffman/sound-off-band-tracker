@@ -27,6 +27,8 @@
 <div class="navbar">
     <h3 class="logo-text text-xl">SoundOff</h3>
     <a style="margin-left:15px;" th:href="@{/users/{userId}/top-artists(userId=${user.userId})}">Top Artists</a>
+    <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
+
 </div>
 <div class="border-solid">
     <div class="">
@@ -40,7 +42,7 @@
         </div>
         <div class="artist-list">
             <div th:each="artist : ${user.artists}" class="artist-item">
-                <a
+                <a style="text-align:center"
                         th:href="@{/users/{userId}/{artistId}(userId=${user.userId}, artistId=${artist.artistId})}"
                         th:text="${artist.name}"
                 ></a>

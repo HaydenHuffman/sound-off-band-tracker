@@ -37,10 +37,12 @@
       opacity: 0.8;
     }
   </style>
+  <link href="/css/style.css" rel="stylesheet" />
+
 </head>
 <body>
 
-<div class="container">
+<div class="container table-container">
   <h2>Login Form</h2>
   <form th:object="${user}" th:action="@{/signin}" method="post" enctype="application/x-www-form-urlencoded" id="loginForm">
 
@@ -49,8 +51,10 @@
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter Password *" th:field="*{password}" name="password" class="required" required>
-
-    <button type="submit">Log in</button>
+    <div style="display:flex;flex-direction:row;justify-content:space-around3">
+      <button type="submit">Log in</button>
+      <a class="create-account-button" href="/register">Create Account</a>
+    </div>
   </form>
 </div>
 

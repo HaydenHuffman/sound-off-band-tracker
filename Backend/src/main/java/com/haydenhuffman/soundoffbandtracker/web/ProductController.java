@@ -1,6 +1,7 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
-import com.coderscampus.SpringSecurityJWTDemo.domain.Product;
+
+import com.haydenhuffman.soundoffbandtracker.domain.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

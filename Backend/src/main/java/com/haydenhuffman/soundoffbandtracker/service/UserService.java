@@ -1,6 +1,7 @@
 package com.haydenhuffman.soundoffbandtracker.service;
 
-import com.coderscampus.SpringSecurityJWTDemo.domain.User;
+
+import com.haydenhuffman.soundoffbandtracker.domain.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

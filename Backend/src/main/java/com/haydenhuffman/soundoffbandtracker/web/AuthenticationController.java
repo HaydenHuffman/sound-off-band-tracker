@@ -1,15 +1,16 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.RefreshTokenRequest;
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.SignInRequest;
-import com.coderscampus.SpringSecurityJWTDemo.dao.response.JwtAuthenticationResponse;
-import com.coderscampus.SpringSecurityJWTDemo.dao.response.TokenRefreshResponse;
-import com.coderscampus.SpringSecurityJWTDemo.domain.RefreshToken;
-import com.coderscampus.SpringSecurityJWTDemo.domain.User;
-import com.coderscampus.SpringSecurityJWTDemo.security.AuthenticationServiceImpl;
-import com.coderscampus.SpringSecurityJWTDemo.security.JwtService;
-import com.coderscampus.SpringSecurityJWTDemo.service.RefreshTokenService;
-import com.coderscampus.SpringSecurityJWTDemo.service.UserServiceImpl;
+
+import com.haydenhuffman.soundoffbandtracker.dao.request.RefreshTokenRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.request.SignInRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.response.JwtAuthenticationResponse;
+import com.haydenhuffman.soundoffbandtracker.dao.response.TokenRefreshResponse;
+import com.haydenhuffman.soundoffbandtracker.domain.RefreshToken;
+import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.security.AuthenticationServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.security.JwtService;
+import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ public class AuthenticationController {
     private final UserServiceImpl userService;
     
     public AuthenticationController(AuthenticationServiceImpl authenticationService,
-			RefreshTokenService refreshTokenService, JwtService jwtService, UserServiceImpl userService) {
+                                    RefreshTokenService refreshTokenService, JwtService jwtService, UserServiceImpl userService) {
 		super();
 		this.authenticationService = authenticationService;
 		this.refreshTokenService = refreshTokenService;

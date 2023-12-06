@@ -1,12 +1,13 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.SignUpRequest;
-import com.coderscampus.SpringSecurityJWTDemo.dao.response.JwtAuthenticationResponse;
-import com.coderscampus.SpringSecurityJWTDemo.domain.User;
-import com.coderscampus.SpringSecurityJWTDemo.security.AuthenticationServiceImpl;
-import com.coderscampus.SpringSecurityJWTDemo.security.JwtServiceImpl;
-import com.coderscampus.SpringSecurityJWTDemo.service.RefreshTokenService;
-import com.coderscampus.SpringSecurityJWTDemo.service.UserServiceImpl;
+
+import com.haydenhuffman.soundoffbandtracker.dao.request.SignUpRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.response.JwtAuthenticationResponse;
+import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.security.AuthenticationServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.security.JwtServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,11 +1,12 @@
 package com.haydenhuffman.soundoffbandtracker.security;
 
-import com.coderscampus.SpringSecurityJWTDemo.domain.RefreshToken;
-import com.coderscampus.SpringSecurityJWTDemo.domain.Role;
-import com.coderscampus.SpringSecurityJWTDemo.domain.User;
-import com.coderscampus.SpringSecurityJWTDemo.service.RefreshTokenService;
-import com.coderscampus.SpringSecurityJWTDemo.service.UserServiceImpl;
-import com.coderscampus.SpringSecurityJWTDemo.util.CookieUtils;
+
+import com.haydenhuffman.soundoffbandtracker.domain.RefreshToken;
+import com.haydenhuffman.soundoffbandtracker.domain.Role;
+import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.util.CookieUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,12 +61,13 @@ public class SecurityConfig {
 //        .authorizeHttpRequests(request -> request.requestMatchers("**").permitAll().anyRequest().authenticated())
                 .authorizeHttpRequests(request -> request
 //                                		.requestMatchers("/api/v1/auth/**").permitAll()
-                                        .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                                        .requestMatchers("/products").authenticated()
+								.requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+//                                     .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+								.requestMatchers("/products").authenticated()
+								.requestMatchers("/users").authenticated()
 //                                        	.requestMatchers("/signin").permitAll()
-                                        	.requestMatchers("/register").permitAll()
-                                        	.anyRequest().permitAll()
+								.requestMatchers("/register").permitAll()
+								.anyRequest().permitAll()
                         )
                 .headers(header -> header.frameOptions(frameOption -> frameOption.disable()))
 //                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -86,7 +87,7 @@ public class SecurityConfig {
 							response = new HttpServletResponseWrapper(response);
 							User user = (User) authentication.getPrincipal();
 					    	String accessToken = jwtService.generateToken(new HashMap<>(), user);
-					    	RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+					    	RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getUserId());
 
 					    	Cookie accessTokenCookie = CookieUtils.createAccessTokenCookie(accessToken);
 					    	Cookie refreshTokenCookie = CookieUtils.createRefreshTokenCookie(refreshToken.getToken());
@@ -97,7 +98,7 @@ public class SecurityConfig {
 //					    	
 					    	response.addCookie(accessTokenCookie);
 							response.addCookie(refreshTokenCookie);
-					    	response.sendRedirect("/success");
+					    	response.sendRedirect("/users/" + user.getUserId());
 						}
 					})
 		        	.failureHandler(new AuthenticationFailureHandler() {
@@ -123,7 +124,11 @@ public class SecurityConfig {
                 	.logoutUrl("/logout")
                 	.logoutSuccessUrl("/signin")
                 	.invalidateHttpSession(true)
-                	.clearAuthentication(true);
+                	.clearAuthentication(true)
+						.deleteCookies("JSESSIONID")
+						.deleteCookies("refreshToken")
+						.deleteCookies("accessToken");
+
                 });
         return http.build();
     }

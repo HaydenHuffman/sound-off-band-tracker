@@ -1,10 +1,11 @@
 package com.haydenhuffman.soundoffbandtracker.service;
 
-import com.coderscampus.SpringSecurityJWTDemo.dao.request.RefreshTokenRequest;
-import com.coderscampus.SpringSecurityJWTDemo.domain.RefreshToken;
-import com.coderscampus.SpringSecurityJWTDemo.repository.RefreshTokenRepository;
-import com.coderscampus.SpringSecurityJWTDemo.repository.UserRepository;
-import com.coderscampus.SpringSecurityJWTDemo.security.JwtServiceImpl;
+
+import com.haydenhuffman.soundoffbandtracker.dao.request.RefreshTokenRequest;
+import com.haydenhuffman.soundoffbandtracker.domain.RefreshToken;
+import com.haydenhuffman.soundoffbandtracker.repository.RefreshTokenRepository;
+import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
+import com.haydenhuffman.soundoffbandtracker.security.JwtServiceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class RefreshTokenService {
 		return refreshTokenRepository.findByToken(token);
 	}
 
-	public RefreshToken createRefreshToken(Integer userId) {
+	public RefreshToken createRefreshToken(Long userId) {
 		RefreshToken refreshToken = new RefreshToken();
 
 		refreshToken.setUser(userRepository.findById(userId).get());
@@ -58,7 +59,7 @@ public class RefreshTokenService {
 	}
 
 	@Transactional
-	public int deleteByUserId(Integer userId) {
+	public int deleteByUserId(Long userId) {
 		return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
 	}
 

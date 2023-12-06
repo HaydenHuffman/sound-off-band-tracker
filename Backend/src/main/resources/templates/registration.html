@@ -43,11 +43,12 @@
       opacity: 0.8;
     }
   </style>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="container table-container">
     <h2>Registration Form</h2>
     <form th:object="${user}" th:action="@{/register}" method="post" enctype="application/x-www-form-urlencoded"
       id="registrationForm">
