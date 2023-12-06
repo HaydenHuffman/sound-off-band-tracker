@@ -3,7 +3,9 @@ package com.haydenhuffman.soundoffbandtracker.web;
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
-import com.haydenhuffman.soundoffbandtracker.service.UserService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
+import com.haydenhuffman.soundoffbandtracker.util.SecurityUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,13 +20,15 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private UserServiceImpl userService;
     private ArtistService artistService;
+    private SecurityUtils securityUtils;
 
 
-    public UserController(UserService userService, ArtistService artistService) {
+    public UserController(UserServiceImpl userService, ArtistService artistService, SecurityUtils securityUtils) {
         this.userService = userService;
         this.artistService = artistService;
+        this.securityUtils = securityUtils;
     }
 
     @GetMapping("/register")
@@ -41,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("@securityUtils.isUserIdMatch(#userId)")
     public String getUserById(@PathVariable Long userId, ModelMap model) {
          User user = userService.findById(userId);
          model.put("user", user);
@@ -50,6 +55,7 @@ public class UserController {
     @GetMapping("/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
         List<Artist> topArtists = artistService.findTopArtists(userId);
+        model.addAttribute("user", userService.findById(userId));
         model.addAttribute("topArtists", topArtists);
         return "top-artists";
     }

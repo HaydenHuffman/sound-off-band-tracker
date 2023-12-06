@@ -6,7 +6,7 @@ import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.PerformanceService;
-import com.haydenhuffman.soundoffbandtracker.service.UserService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +18,9 @@ public class PerformanceController {
     private final PerformanceService performanceService;
     private final PerformanceRepository performanceRepository;
     private final ArtistService artistService;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public PerformanceController(UserService userService, PerformanceService performanceService, ArtistService artistService, PerformanceRepository performanceRepository) {
+    public PerformanceController(UserServiceImpl userService, PerformanceService performanceService, ArtistService artistService, PerformanceRepository performanceRepository) {
         this.performanceService = performanceService;
         this.artistService = artistService;
         this.performanceRepository = performanceRepository;

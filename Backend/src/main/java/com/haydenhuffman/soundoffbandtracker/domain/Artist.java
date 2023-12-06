@@ -17,7 +17,7 @@ public class Artist {
     private List<Performance> performances;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
     private String image;
     private Double aggScore;

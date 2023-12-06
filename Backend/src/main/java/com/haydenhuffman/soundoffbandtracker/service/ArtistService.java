@@ -13,8 +13,8 @@ import java.util.*;
 @Service
 public class ArtistService {
     private ArtistRepository artistRepository;
-    private UserService userService;
-    public ArtistService(ArtistRepository artistRepository, UserService userService) {
+    private UserServiceImpl userService;
+    public ArtistService(ArtistRepository artistRepository, UserServiceImpl userService) {
         this.artistRepository = artistRepository;
         this.userService = userService;
     }
@@ -124,4 +124,5 @@ public class ArtistService {
                 .toList();
         return topArtists;
     }
+
 }
