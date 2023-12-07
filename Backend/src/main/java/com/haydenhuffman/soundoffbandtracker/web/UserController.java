@@ -12,10 +12,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
     private UserServiceImpl userService;
@@ -42,7 +44,7 @@ public class UserController {
         return "redirect:/{userId}";
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     @PreAuthorize("@securityUtils.isUserIdMatch(#userId)")
     public String getUserById(@PathVariable Long userId, ModelMap model) {
          User user = userService.findById(userId);
@@ -50,7 +52,7 @@ public class UserController {
          return "user";
     }
 
-    @GetMapping("/users/{userId}/top-artists")
+    @GetMapping("/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
         List<Artist> topArtists = artistService.findTopArtists(userId);
         model.addAttribute("user", userService.findById(userId));
