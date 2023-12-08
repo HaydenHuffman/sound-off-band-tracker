@@ -1,96 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-  <title>Registration Form</title>
-  <style>
-    /* Add some basic styling for the form */
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
-      width: 300px;
-      padding: 16px;
-      background-color: white;
-      margin: 0 auto;
-      margin-top: 50px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    input[type=text],
-    input[type=password] {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-  </style>
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundOff - Performance Optimization and Booking Platform</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+    </style>
 </head>
-
 <body>
+<header>
+    <nav class="navbar">
+        <div class="logo-text">SoundOff</div>
+        <ul class="nav-links">
+            <li><a href="/signin">Log In</a></li>
+            <li><a href="/register">Create Account</a></li>
+        </ul>
+    </nav>
+</header>
 
-  <div class="container table-container">
-    <h2>Registration Form</h2>
-    <form th:object="${user}" th:action="@{/register}" method="post" enctype="application/x-www-form-urlencoded"
-      id="registrationForm">
-      <label for="firstName"><b>First Name</b></label>
-      <input type="text" placeholder="Enter First Name *" th:field="*{firstName}" name="firstName" class="required"
-        required>
+<main>
+    <div class="intro-section">
+        <div class="intro-header">
+            <h1>Introducing SoundOff</h1>
+            <p>Your Ultimate Performance Analytics and Booking Assistant</p>
+        </div>
+        <div class="empty-div intro-header"></div>
+    </div>
 
-      <label for="lastName"><b>Last Name</b></label>
-      <input type="text" placeholder="Enter Last Name *" th:field="*{lastName}" name="lastName" class="required"
-        required>
+    <div class="feature-cards">
+        <div class="card">
+            <h3>Performance Analytics</h3>
+            <p>Detailed insights into audience attendance and artist performance.</p>
+        </div>
+        <div class="card">
+            <h3>Equitable Booking</h3>
+            <p>Ensure a fair and diverse lineup of talents on your stage.</p>
+        </div>
+        <div class="card">
+            <h3>Optimal Scheduling</h3>
+            <p>Strategically schedule performances for maximum impact.</p>
+        </div>
+    </div>
+</main>
 
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email *" th:field="*{email}" name="email" class="required" required>
+<footer>
+    <p>Contact us at <a href="mailto:contact@soundoff.com">contact@soundoff.com</a></p>
+</footer>
 
-      <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password *" th:field="*{password}" name="password" id="password"
-        class="required" required>
-
-      <label for="confirmPassword"><b>Confirm Password</b></label>
-      <input type="password" placeholder="Confirm Password *" name="confirmPassword" id="confirmPassword"
-        class="required" required>
-
-      <button type="submit">Register</button>
-    </form>
-  </div>
-
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-      var password = document.getElementById('password').value;
-      var confirmPassword = document.getElementById('confirmPassword').value;
-
-      if (password !== confirmPassword) {
-        alert('Passwords do not match!');
-        event.preventDefault(); // Prevent form submission
-      }
-    });
-
-    /*]]>*/
-  </script>
+<script src="/js/index.js"></script>
 
 </body>
-
 </html>

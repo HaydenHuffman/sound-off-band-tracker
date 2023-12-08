@@ -49,7 +49,7 @@ public class RegistrationController {
 	@GetMapping("/register")
 	public String getRegistration (ModelMap model) {
 		model.addAttribute("user", new User());
-		return "index";
+		return "registration";
 	}
 	
 	

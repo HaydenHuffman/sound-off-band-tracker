@@ -31,10 +31,14 @@ public class UserController {
         this.securityUtils = securityUtils;
     }
 
+    @GetMapping("")
+    public String getIndex() {
+        return "index";
+    }
     @GetMapping("/register")
     public String getCreateUser(ModelMap model) {
         model.put("user", new User());
-        return "register";
+        return "registration";
     }
 
     @PostMapping("/register")
