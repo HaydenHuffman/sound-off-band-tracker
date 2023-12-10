@@ -21,6 +21,11 @@ public class Performance {
     public Performance() {
     }
 
+    public Performance (LocalDate date, Double attendance) {
+        this.date = date;
+        this.attendance = attendance;
+    }
+
     public Long getPerformanceId() {
         return performanceId;
     }

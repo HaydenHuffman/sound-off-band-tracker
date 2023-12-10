@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Top Artists</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/style.css"/>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
@@ -14,7 +15,7 @@
     <a style="margin-left:15px;" th:href="@{/users/{userId}(userId=${user.userId})}">Home</a>
     <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
 </div>
-<div class="table-container">
+<div class="mobile-full table-container">
     <table class="artist-performance-table top-artist-table">
         <thead>
         <tr>

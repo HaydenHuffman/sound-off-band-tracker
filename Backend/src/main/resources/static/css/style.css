@@ -2,34 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width: 800px) {
-    .artist-performance-table button {
-            padding: 8px;
-        }
-
-    .actions-column button{
-        flex-direction: column;
-        gap: 10px;
-    }
-    .feature-cards {
-            flex-direction: column;
-        }
-
-        .card {
-            width: 80%;
-            margin: 10px auto;
-        }
-
-        .nav-links li {
-            display: block;
-            text-align: center;
-            margin: 10px 0;
-        }
-}
 
 
 a {
-    color: #192655;
+    color: #012B39;
     text-decoration: none;
 }
 
@@ -38,8 +14,8 @@ a:hover {
 }
 
 body {
-    font-family: 'Poppins', sans-serif !important;
-    background-color: #fcfcfc;
+    font-family: 'DM Sans', sans-serif !important;
+    background-color: #FFF5EB;
     margin: 0;
     padding: 0px;
     box-sizing: border-box;
@@ -53,7 +29,7 @@ button {
     height: 40px;
     width: 100px;
     border-radius: 5px;
-    background-color: #192655;
+    background-color: #012B39;
     color: #fafafa;
     font-family:inherit;
     font-size: .75em;
@@ -63,7 +39,7 @@ button {
 }
 
 button:hover {
-    color: #192655;
+    color: #012B39;
     background-color: #fafafa;
 }
 
@@ -108,11 +84,14 @@ footer a {
 }
 
 .artist-bar {
+    padding-top: 1em;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .artist-header {
+    padding-top: 5em;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -128,7 +107,7 @@ footer a {
      border-radius: 50px;
      height: 100px;
      width: 80%;
-     background-color: #cfcfcf;
+     background-color: #CBDFDE;
      color: #192655;
      box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
@@ -180,7 +159,7 @@ footer a {
 .artist-rating {
     width: 100px;
     height: 100px;
-    background-color: #192655;
+    background-color: #012B39;
     color: white;
     display: flex;
     flex-direction: column;
@@ -233,14 +212,12 @@ footer a {
 }
 
 .card {
-    background: #eee;
     margin: 5px;
     padding: 20px;
     width: 30%;
     text-align: center;
     justify-content: space-between;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -255,7 +232,7 @@ footer a {
     height: 40px;
     width: 100px;
     border-radius: 5px;
-    background-color: #192655;
+    background-color: #012B39;
     color: #fafafa;
     font-family: inherit;
     font-size: .75em;
@@ -265,7 +242,7 @@ footer a {
 
 .create-account-button:hover {
     text-decoration: none;
-    color: #192655;
+    color: #012B39;
     background-color: #fafafa;
 }
 
@@ -277,7 +254,9 @@ footer a {
 .feature-cards {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     padding: 20px;
+    background-color: #CBDFDE;
 }
 
 .form-buttons {
@@ -286,11 +265,17 @@ footer a {
     justify-content: space-around;
 }
 
+.intro-logo {
+    width: 50%;
+}
+
 .intro-section {
-    font-family: 'Kalnia', serif;
+    font-family: 'DM Sans', sans serif;
     display: flex;
+    max-width: 100%;
     flex-direction: row;
     text-align: left;
+    align-items: center;
     margin-left: auto;
     margin-right: auto;
     padding: 5em 3em;
@@ -300,13 +285,13 @@ footer a {
 .intro-section h1 {
     font-weight: 600;
     font-size: 4em;
-     color: #192655;
+     color: #012B39;
 }
 
 .intro-section p {
     font-weight: 500;
     font-size: 3em;
-     color: #AEC6CF;
+    color: #192655;
 }
 
 .intro-header {
@@ -314,21 +299,32 @@ footer a {
     flex: 1;
 }
 
-.logo-text {
-    margin-left: 2em;
+.logo {
+    padding: auto;
+    max-height: auto;
+    max-width: 100%;
+    flex: 1;
 }
 
+.logo-text {
+    margin-left: 2em;
+    font-size: 1.5rem;
+}
 
+main {
+    margin: 0 auto;
+    padding: min(5%, 2.5rem) 0;
+    justify-content: center;
+  }
 
 .navbar {
-    background-color: #cfcfcf;
+    background-color: #CBDFDE;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     display: flex;
-    font-family: 'Poppins', sans-serif;
     height: 4em;
     top: 0;
     width: 100%;
-    color: #192655;
+    color: #012B39;
     align-items: center;
     justify-content: space-between;
 }
@@ -351,12 +347,15 @@ footer a {
     background-color: white;
 }
 
-  .main {
-    margin: 0 auto;
-    padding: min(5%, 2.5rem) 0;
-    justify-content: center;
-    width: min(90%, 600px);
-  }
+.v-rule {
+    width: 2px;
+    height: 240px;
+    background-color: #ffffff;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+
   
   .buttons {
     flex-direction: column;
@@ -382,4 +381,47 @@ sl-button:defined, sl-input:defined {
   li {
     display: inline;
 
+  }
+
+  @media screen and (max-width: 600px) {
+      .artist-performance-table button {
+              padding: 8px;
+          }
+
+      .actions-column button{
+          flex-direction: column;
+          gap: 10px;
+      }
+
+      .feature-cards {
+              flex-direction: column;
+              width: 100%;
+      }
+
+      .intro-section {
+        flex-direction: column;
+      }
+
+      .intro-logo {
+        width: 70%;
+        max-width: 200px;
+
+      }
+
+      .card {
+          width: 80%;
+          margin: 10px auto;
+      }
+
+      .v-rule {
+        width: 80%;
+        height: 2px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+
+      .container {
+          width: 100%;
+          padding: .5em;
+      }
   }

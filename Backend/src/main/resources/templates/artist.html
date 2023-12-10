@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>[[${artist.name}]] Artist Page</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/style.css">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
@@ -13,12 +14,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.11.2/cdn/themes/light.css"/>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600&family=Kalnia:wght@500;600&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
 <div class="navbar">
-    <h3 class="logo-text">SoundOff</h3>
+    <div class="logo-text">
+        <a href="/">SoundOff</a>
+    </div>
     <ul>
         <li><a th:href="@{/users/{userId}(userId=${artist.user.userId})}">Home</a></li>
     </ul>
@@ -32,7 +38,7 @@
         <span th:text="${artist.aggScore}"></span>
     </div>
 </div>
-<div style="display: flex;flex-direction: row; justify-content:center;">
+<div class="" style="display: flex;flex-direction: row; justify-content:center; padding:3em;">
     <div>
         <form class="artist-edit"
               th:action="@{/users/{userId}/{artistId}(userId=${artist.user.userId}, artistId=${artist.artistId})}"
@@ -41,12 +47,14 @@
             </div>
             <input type="hidden" th:field="${artist.user.userId}"/>
             <input type="hidden" th:field="${artist.aggScore}" />
-            <button class="">Confirm changes</button>
-        </form>
-        <form class="artist-delete"
-              th:action="@{/users/{userId}/{artistId}/delete(userId=${artist.user.userId}, artistId=${artist.artistId})}"
-              method="post">
-            <button type="submit">Delete Artist</button>
+            <div class="form-buttons">
+                <button class="">Confirm changes</button>
+                <form class="artist-delete"
+                      th:action="@{/users/{userId}/{artistId}/delete(userId=${artist.user.userId}, artistId=${artist.artistId})}"
+                      method="post">
+                    <button type="submit">Delete Artist</button>
+                </form>
+            </div>
         </form>
     </div>
     <div>

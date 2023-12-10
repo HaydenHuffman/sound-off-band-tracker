@@ -25,6 +25,11 @@ public class Artist {
     public Artist() {
     }
 
+    public Artist(User user, List<Performance> performances) {
+        this.user = user;
+        this.performances = performances;
+    }
+
     public Long getArtistId() {
         return artistId;
     }
