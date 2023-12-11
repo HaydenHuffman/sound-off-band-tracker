@@ -11,7 +11,7 @@ public class Performance {
     private Long performanceId;
     private LocalDate date;
     private Double attendance;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "artist_id")
     @JsonBackReference
     private Artist artist;
