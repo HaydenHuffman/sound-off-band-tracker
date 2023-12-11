@@ -70,7 +70,7 @@ public class UserController {
 
     @GetMapping("/users/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
-        List<Artist> topArtists = artistService.findTopArtists(userId);
+        List<Artist> topArtists = userService.findTopArtists(userId);
         model.addAttribute("user", userService.findById(userId));
         model.addAttribute("topArtists", topArtists);
         return "top-artists";
