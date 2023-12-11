@@ -84,7 +84,10 @@ public class User implements UserDetails {
     }
 
     public List<Artist> getArtists() {
-        return artists;
+        if (this.artists == null) {
+            this.artists = new ArrayList<>();
+        }
+        return this.artists;
     }
 
     public void setArtists(List<Artist> artists) {
@@ -128,7 +131,15 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", artists=" + artists + ", authorities=" + authorities + '}';
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+//                ", artists=" + artists +
+                ", authorities=" + authorities +
+                '}';
     }
 
     @Override

@@ -20,11 +20,10 @@ public class ArtistService {
         this.userService = userService;
     }
     public Artist createNewArtist(User user, Artist artist) {
-        user.getArtists().add(artist);
         artist.setName(createArtistName());
         artist.setUser(user);
         artistRepository.save(artist);
-        userService.save(user);
+        user.getArtists().add(artist);
         return artist;
     }
 

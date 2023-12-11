@@ -1,7 +1,10 @@
 package com.haydenhuffman.soundoffbandtracker.web;
 
+import com.haydenhuffman.soundoffbandtracker.dao.request.SignUpRequest;
+import com.haydenhuffman.soundoffbandtracker.dao.response.JwtAuthenticationResponse;
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.security.AuthenticationServiceImpl;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import com.haydenhuffman.soundoffbandtracker.util.SecurityUtils;
@@ -12,23 +15,24 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
     private UserServiceImpl userService;
     private ArtistService artistService;
     private SecurityUtils securityUtils;
+    private AuthenticationServiceImpl authenticationService;
 
 
-    public UserController(UserServiceImpl userService, ArtistService artistService, SecurityUtils securityUtils) {
+    public UserController(UserServiceImpl userService, ArtistService artistService, SecurityUtils securityUtils, AuthenticationServiceImpl authenticationService) {
         this.userService = userService;
         this.artistService = artistService;
         this.securityUtils = securityUtils;
+        this.authenticationService = authenticationService;
     }
 
     @GetMapping("")
@@ -38,17 +42,25 @@ public class UserController {
     @GetMapping("/register")
     public String getCreateUser(ModelMap model) {
         model.put("user", new User());
-        return "registration";
+        return "register";
     }
 
     @PostMapping("/register")
-    public String postCreateUser(User user, ModelMap model) {
-        userService.createUser(user);
-        model.addAttribute("userId", user.getUserId());
-        return "redirect:/{userId}";
+    public String postCreateUser(ModelMap model, SignUpRequest request) {
+        Optional<User> existingUser = userService.findUserByEmail(request.email());
+        if (existingUser.isEmpty()) {
+            JwtAuthenticationResponse signupResponse = authenticationService.signup(request);
+            if (signupResponse != null) {
+                model.addAttribute("user", new User());
+                return "login";
+            } else {
+                return "error";
+            }
+        } else {
+            return "userExists";
+        }
     }
-
-    @GetMapping("/{userId}")
+    @GetMapping("/users/{userId}")
     @PreAuthorize("@securityUtils.isUserIdMatch(#userId)")
     public String getUserById(@PathVariable Long userId, ModelMap model) {
          User user = userService.findById(userId);
@@ -56,17 +68,11 @@ public class UserController {
          return "user";
     }
 
-    @GetMapping("/{userId}/top-artists")
+    @GetMapping("/users/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
         List<Artist> topArtists = artistService.findTopArtists(userId);
         model.addAttribute("user", userService.findById(userId));
         model.addAttribute("topArtists", topArtists);
         return "top-artists";
-    }
-
-    @GetMapping("/home/{userId}")
-    public String getHomePage(ModelMap model, @PathVariable Long userId) {
-//        model.put("artist", artist);
-        return null;
     }
 }

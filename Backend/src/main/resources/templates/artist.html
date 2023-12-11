@@ -26,13 +26,12 @@
         <a href="/">SoundOff</a>
     </div>
     <ul>
-        <li><a th:href="@{/users/{userId}(userId=${artist.user.userId})}">Home</a></li>
+        <li>[[${artist.name}]]</li>
     </ul>
     <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
-
 </div>
+<a th:href="@{/users/{userId}(userId=${artist.user.userId})}" style="padding:1em auto;">< Home</a>
 <div class="artist-header">
-    <h2>[[${artist.name}]]</h2>
     <div class="artist-rating">
         <p>Artist Rating: </p>
         <span th:text="${artist.aggScore}"></span>

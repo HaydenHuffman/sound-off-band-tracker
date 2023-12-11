@@ -25,10 +25,12 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private ArtistService artistService;
+    private PerformanceService performanceService;
 
-    public UserServiceImpl(UserRepository userRepository, @Lazy ArtistService artistService) {
+    public UserServiceImpl(UserRepository userRepository, @Lazy ArtistService artistService, PerformanceService performanceService) {
         this.userRepository = userRepository;
         this.artistService = artistService;
+        this.performanceService = performanceService;
     }
 
     public User findById(Long userId) {
@@ -36,19 +38,23 @@ public class UserServiceImpl implements UserService {
         return userOpt.orElse(new User());
     }
 
-    public User createUser(User user) {
+    public User addUserData(User user) {
         LocalDate date = LocalDate.now();
         Random random = new Random();
+        List<Artist> newArtists = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Artist newArtist = artistService.createNewArtist(user, new Artist());
             List<Performance> performances = new ArrayList<>();
-            for (int j = 0; j < 2; j++){
-                Double attendance = random.nextDouble(81) + 20;
-                performances.add(new Performance(date, attendance));
+            for (int j = 3; j < 6; j++){
+                Double attendance = (double) (random.nextInt(81) + 20);
                 date = date.minusDays(j);
+                performanceService.createPerformance(new Performance(date, attendance), newArtist.getArtistId());
             }
             newArtist.setPerformances(performances);
+            newArtist.setUser(user);
+            newArtists.add(newArtist);
         }
+        user.setArtists(newArtists);
         return userRepository.save(user);
     }
 
