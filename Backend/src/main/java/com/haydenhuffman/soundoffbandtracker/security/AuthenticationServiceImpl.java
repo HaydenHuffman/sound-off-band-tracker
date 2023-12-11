@@ -10,6 +10,7 @@ import com.haydenhuffman.soundoffbandtracker.domain.Role;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
 import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
+import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,30 +28,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenService refreshTokenService;
+    private final UserServiceImpl userService;
     
     public AuthenticationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                                     JwtService jwtService, AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService) {
+                                     JwtService jwtService, AuthenticationManager authenticationManager,
+                                     UserServiceImpl userService, RefreshTokenService refreshTokenService) {
         super();
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
         this.refreshTokenService = refreshTokenService;
     }
-    
-//    @Autowired
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//    
-//    public AuthenticationServiceImpl(UserRepository userRepository, JwtService jwtService,
-//		AuthenticationManager authenticationManager, RefreshTokenService refreshTokenService) {
-//	super();
-//	this.userRepository = userRepository;
-//	this.jwtService = jwtService;
-//	this.authenticationManager = authenticationManager;
-//	this.refreshTokenService = refreshTokenService;
-//}
 
 
 
@@ -64,6 +54,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .authority(Role.USER.name()).build();
         request.authorityOpt().ifPresent(auth -> user.getAuthorities().add(new Authority(auth, user)));
         userRepository.save(user);
+        userService.addUserData(user);
+
         var jwt = jwtService.generateToken(user);
         var refreshToken = refreshTokenService.createRefreshToken(user.getUserId());
         

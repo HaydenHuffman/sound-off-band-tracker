@@ -7,9 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements UserDetails {
     private static final long serialVersionUID = 2025389852147750927L;
     @Id
@@ -25,7 +26,16 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Authority> authorities = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RefreshToken> refreshTokens;
 
+    public Set<RefreshToken> getRefreshTokens() {
+        return refreshTokens;
+    }
+
+    public void setRefreshTokens(Set<RefreshToken> refreshTokens) {
+        this.refreshTokens = refreshTokens;
+    }
 
     public Long getUserId() {
         return userId;
@@ -74,7 +84,10 @@ public class User implements UserDetails {
     }
 
     public List<Artist> getArtists() {
-        return artists;
+        if (this.artists == null) {
+            this.artists = new ArrayList<>();
+        }
+        return this.artists;
     }
 
     public void setArtists(List<Artist> artists) {
@@ -124,7 +137,7 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", artists=" + artists +
+//                ", artists=" + artists +
                 ", authorities=" + authorities +
                 '}';
     }
@@ -148,7 +161,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    public User build () {
+
+    public User build() {
         return this;
     }
 }

@@ -4,6 +4,7 @@ import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.ArtistRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,19 +15,16 @@ import java.util.*;
 public class ArtistService {
     private ArtistRepository artistRepository;
     private UserServiceImpl userService;
-    public ArtistService(ArtistRepository artistRepository, UserServiceImpl userService) {
+    public ArtistService(ArtistRepository artistRepository, @Lazy UserServiceImpl userService) {
         this.artistRepository = artistRepository;
         this.userService = userService;
     }
-    public Artist createNewArtist(Long userId, Artist artist) {
-        User user = userService.findById(userId);
-        user.getArtists().add(artist);
+    public Artist createNewArtist(User user, Artist artist) {
         artist.setName(createArtistName());
         artist.setUser(user);
-        artist.setImage("/images/band.jpg");
         artistRepository.save(artist);
+        user.getArtists().add(artist);
         return artist;
-
     }
 
     public Artist findById(Long artistId) {

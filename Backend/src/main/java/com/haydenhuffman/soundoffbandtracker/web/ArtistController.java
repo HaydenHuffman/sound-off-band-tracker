@@ -7,13 +7,9 @@ import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Base64;
 
 @Controller
 @RequestMapping("/users")
@@ -49,7 +45,7 @@ public class ArtistController {
     public String createNewArtist(@PathVariable Long userId, @ModelAttribute Artist artist) throws IOException, InterruptedException {
         User user = userService.findById(userId);
         artist.setUser(user);
-        artistService.createNewArtist(userId, artist);
+        artistService.createNewArtist(user, artist);
         return "redirect:/users/" + userId;
     }
 

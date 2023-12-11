@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,11 @@ public class Artist {
     public Artist() {
     }
 
+    public Artist(User user, List<Performance> performances) {
+        this.user = user;
+        this.performances = performances;
+    }
+
     public Long getArtistId() {
         return artistId;
     }
@@ -42,7 +48,10 @@ public class Artist {
     }
 
     public List<Performance> getPerformances() {
-        return performances;
+        if (this.performances == null) {
+            this.performances = new ArrayList<>();
+        }
+        return  this.performances;
     }
 
     public void setPerformances(List<Performance> performances) {
@@ -78,7 +87,7 @@ public class Artist {
         return "Artist{" +
                 "artistId=" + artistId +
                 ", name='" + name + '\'' +
-                ", performances=" + performances +
+//                ", performances=" + performances +
                 ", user=" + user +
                 ", image='" + image + '\'' +
 //                ", aggScore=" + aggScore +

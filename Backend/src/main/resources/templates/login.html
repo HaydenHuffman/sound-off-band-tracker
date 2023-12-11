@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Sign in Form</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
   <style>
     /* Add some basic styling for the form */
     body {
@@ -38,11 +40,22 @@
     }
   </style>
   <link href="/css/style.css" rel="stylesheet" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600&family=Kalnia:wght@500;600&display=swap"
+        rel="stylesheet">
 </head>
 <body>
-
-<div class="container table-container">
+<header>
+  <nav class="navbar">
+    <div class="logo-text">
+      <a href="/">SoundOff</a>
+    </div>
+    <ul class="nav-links">
+    </ul>
+  </nav>
+</header>
+<div class="mobile-full container table-container">
   <h2>Login Form</h2>
   <form th:object="${user}" th:action="@{/signin}" method="post" enctype="application/x-www-form-urlencoded" id="loginForm">
 
