@@ -1,0 +1,429 @@
+$bg-color: #FFF5EB;
+$primary-dark: #012B39;
+$primary-light: #fafafa;
+$secondary-dark: #192655;
+$secondary-light: #CBDFDE;
+
+a {
+    color: $primary-dark;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif !important;
+    background-color: $bg-color;
+    margin: 0;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: $primary-dark;
+    color: $primary-light;
+    font-family:inherit;
+    font-size: .75em;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+
+button:hover {
+    color: $primary-dark;
+    background-color: $primary-light;
+}
+
+input {
+    border: 0;
+    height: 40px;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    font-family:inherit;
+    font-size: inherit;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: $secondary-dark;
+
+}
+
+footer a {
+    text-decoration: none;
+}
+
+
+
+.actions-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 4px;
+    gap: 15px;
+}
+
+
+.add-artist-button {
+    margin-right: 5em;
+    height: 45px;
+}
+
+.artist-bar {
+    padding-top: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.artist-header {
+    padding-top: 5em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.artist-item {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin: 10px;
+     padding: 10px;
+     border: 1px solid #ddd;
+     border-radius: 50px;
+     height: 100px;
+     width: 80%;
+     background-color: $secondary-light;
+     color: $secondary-dark;
+     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.artist-performance-display {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+}
+
+.artist-performance-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.artist-performance-table th, .artist-performance-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.artist-performance-table th {
+    background-color: $secondary-light;
+}
+
+.artist-performance-table tbody tr:hover {
+    background-color: $bg-color;
+}
+
+.artist-performance-table tbody tr:nth-child(even) {
+    background-color: $primary-light;
+}
+
+.artist-performance-table td {
+    min-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+     white-space: nowrap;
+    }
+    
+.artist-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .artist-rating {
+        width: 162px;
+        height: 100px;
+        padding: 1em;
+        background-color: $primary-dark;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .delete-icon {
+        cursor: pointer;
+        font-size: 18px;
+        color: #ff0000; /* Red color for delete */
+    }
+    
+    .display-item {
+        height: 50px;
+        width: 80%;
+        border: 2px solid #ffffff;
+    
+    
+    
+    }
+    
+    .edit-form {
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+        width: 220px;
+        height: 220px;
+        margin: 15px auto;
+    }
+    
+    .edit-form .artist-field input {
+        width: 100%;
+        max-width: 250px;
+        margin: auto;
+    }
+    
+    .input-container sl-input {
+     flex: 1;
+     max-width: 200px;
+    }
+    
+    .card {
+        margin: 5px;
+        padding: 20px;
+        width: 30%;
+        text-align: center;
+        justify-content: space-between;
+        border-radius: 8px;
+    }
+    
+    
+    
+    .create-account-button {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        border: none;
+        padding: 1px;
+        height: 40px;
+        width: 100px;
+        border-radius: 5px;
+        background-color: $primary-dark;
+        color: $primary-light;
+        font-family: inherit;
+        font-size: .75em;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+    }
+    
+    .create-account-button:hover {
+        text-decoration: none;
+        color: $primary-dark;
+        background-color: $primary-light;
+    }
+    
+    .empty-div {
+        flex: 1;
+        min-height: 100px;
+    }
+    
+    .feature-cards {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+        background-color: #CBDFDE;
+    }
+    
+    .form-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .intro-logo {
+        width: 50%;
+    }
+    
+    .intro-section {
+        font-family: 'DM Sans', sans serif;
+        display: flex;
+        max-width: 100%;
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 5em 3em;
+        overflow: auto;
+    }
+    
+    .intro-section h1 {
+        font-weight: 600;
+        font-size: 4em;
+         color: $primary-dark;
+    }
+    
+    .intro-section p {
+        font-weight: 500;
+        font-size: 3em;
+        color: $secondary-dark;
+    }
+    
+    .intro-header {
+        align-items: flex-start;
+        flex: 1;
+    }
+    
+    .logo {
+        padding: auto;
+        max-height: auto;
+        max-width: 100%;
+        flex: 1;
+    }
+    
+    .logo-text {
+        margin-left: 2em;
+        font-size: 1.5rem;
+    }
+    
+    main {
+        margin: 0 auto;
+        padding: min(5%, 2.5rem) 0;
+        justify-content: center;
+      }
+    
+    .navbar {
+        background-color: $secondary-light;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        display: flex;
+        height: 4em;
+        top: 0;
+        width: 100%;
+        color: $primary-dark;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .navbar a {
+        margin-right: 10px;
+    }
+    
+    .performance-row {
+        position: relative;
+    }
+    
+    
+    .table-container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 90%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: white;
+    }
+    
+    .v-rule {
+        width: 2px;
+        height: 240px;
+        background-color: #ffffff;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+    
+    
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+    
+    
+    /* Hide components while empty */
+    sl-button, sl-input {
+      display: none;
+    }
+    
+    /* Show components when they are defined */
+    sl-button:defined, sl-input:defined {
+      display: inline-block;
+    }
+    
+      ul {
+        list-style: none;
+        margin-right: 10px;
+      }
+    
+      li {
+        display: inline;
+    
+      }
+    
+      @media screen and (max-width: 600px) {
+          .artist-performance-table button {
+                  padding: 8px;
+              }
+    
+          .actions-column button{
+              flex-direction: column;
+              gap: 10px;
+          }
+    
+          .feature-cards {
+                  flex-direction: column;
+                  width: 100%;
+          }
+    
+          .intro-section {
+            flex-direction: column;
+          }
+    
+          .intro-logo {
+            width: 70%;
+            max-width: 200px;
+    
+          }
+    
+          .card {
+              width: 80%;
+              margin: 10px auto;
+          }
+    
+          .v-rule {
+            width: 80%;
+            height: 2px;
+            margin-top: 1em;
+            margin-bottom: 1em;
+          }
+    
+          .container {
+              width: 100%;
+              padding: .5em;
+          }
+      }
