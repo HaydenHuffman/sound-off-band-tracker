@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         Random random = new Random();
         List<Artist> newArtists = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Artist newArtist = artistService.createNewArtist(user, new Artist());
+            Artist newArtist = artistService.createRandomArtist(user, new Artist());
             List<Performance> performances = new ArrayList<>();
             for (int j = 3; j < 6; j++){
                 Double attendance = (double) (random.nextInt(81) + 20);

@@ -39,11 +39,9 @@
     <div class="">
         <div class="artist-bar">
             <h2 style="margin-left:2em;" class="">Artists</h2>
-            <form th:action="@{/users/{userId}/create(userId=${user.userId})}" method="post">
-                <button class="add-artist-button">
+            <a th:href="@{/users/{userId}/create(userId=${user.userId})}" class="add-artist-button">
                     Add New Artist
-                </button>
-            </form>
+            </a>
         </div>
         <div class="artist-list">
             <div th:each="artist : ${user.artists}" class="artist-item">

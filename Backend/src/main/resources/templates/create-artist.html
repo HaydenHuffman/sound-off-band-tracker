@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Artist</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+      <nav class="navbar">Navbar</nav>
+  </header>
+  <main>
+      <div class="table-container">
+          <form th:action="@{/users/{userId}/create(userId=${user.userId})}" method="post"
+            class="artist-edit">
+              <div class="artist-field">
+                Artist Name:*<br/><input type="text" id="artist-name" th:field="${artist.name}" required/>
+              </div>
+              <div class="artist-field">
+                  Main Contact:<br/><input type="text" id="artist-contact" th:field="${artist.mainContact}" />
+              </div>
+              <div class="artist-field">
+                  Contact #:<br/><input type="text" id="artist-contact-number" th:field="${artist.phoneNumber}" />
+              </div>
+
+              <div class="artist-field">
+                  Description:<br/><input type="text" id="artist-description" th:field="${artist.description}" />
+              </div>
+              <button>Create Artist</button>
+          </form>
+      </div>
+  </main>
+</body>
+</html>

@@ -16,7 +16,7 @@ public class Performance {
     @JsonBackReference
     private Artist artist;
     private Double perfScore;
-
+    private Double sales;
     
     public Performance() {
     }
@@ -56,6 +56,13 @@ public class Performance {
     }
     public void setPerfScore(Double perfScore) {
         this.perfScore = perfScore;
+    }
+    public Double getSales() {
+        return sales;
+    }
+
+    public void setSales(Double sales) {
+        this.sales = sales;
     }
 
 
