@@ -43,10 +43,11 @@
               th:action="@{/users/{userId}/{artistId}(userId=${artist.user.userId}, artistId=${artist.artistId})}"
               method="post">
             <label for="name">Artist Name:</label>
-            <div class="artist-field"><input type="text" th:field="${artist.name}" name="name" placeholder="Edit Artist Name"/>
+            <div class="artist-field"><input type="text" th:field="${artist.name}" name="name"
+                                             placeholder="Edit Artist Name"/>
             </div>
             <input type="hidden" th:field="${artist.user.userId}"/>
-            <input type="hidden" th:field="${artist.aggScore}" />
+            <input type="hidden" th:field="${artist.aggScore}"/>
             <div class="form-buttons">
                 <button class="">Confirm changes</button>
             </div>
@@ -62,10 +63,11 @@
               th:action="@{/users/{userId}/{artistId}/add(userId=${artist.user.userId}, artistId=${artist.artistId})}"
               th:object="${performance}" method="post">
             <label for="date">Performance Date:</label>
-            <input type="text" th:field="*{date}" class="datepicker" autocomplete="off" name="date" placeholder="Select Date"/>
+            <input type="text" th:field="*{date}" class="datepicker" autocomplete="off" name="date"
+                   placeholder="Select Date"/>
             <label for="performance-attendance">Total Attendance:</label>
             <input type="number" th:field="*{attendance}" id="performance-attendance" placeholder="Attendance"/>
-            <input type="hidden" th:field="${artist.artistId}"/>
+            <input type="hidden" th:value="${artist.artistId}"/>
             <button type="submit" class="add-performance-button">
                 Add New Performance
             </button>
@@ -89,16 +91,41 @@
             <td>[[${performance.attendance}]]</td>
             <td>[[${performance.perfScore}]]</td>
             <td class="">
-                <form th:action="@{/users/{userId}/{artistId}/{performanceId}(userId=${artist.user.userId},
-                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="get">
-                    <button class="edit-btn">Edit</button>
-                </form>
+                    <button class="show-modal edit-btn" th:attr="data-performance-id=${performance.performanceId}">Edit</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+<div class="modal hidden">
+    <button class="close-modal">&times;</button>
+    <h1>Edit Performance</h1>
+    <div class="table-container container">
+        <form class="artist-edit performance-edit" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+            <label for="performance-date">Performance Date:</label>
+            <input class="datepicker" type="text" id="performance-date"
+                   placeholder="Edit Date" autocomplete="off"/>
+            <br/>
+            <label for="performance-attendance">Attendance Count:</label>
+            <input type="number" id="performance-attendance"
+                   placeholder="Edit Attendance Count"/>
 
+            <input type="hidden" th:field="${performance.artist.artistId}"/>
+            <input type="hidden" th:field="${performance.perfScore}"/>
+            <input type="hidden" th:field="${performance.performanceId}"/>
+
+            <div style="display:flex;flex-direction:row;">
+                <button class="">Submit Changes</button>
+            </div>
+        </form>
+        <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+<div class="overlay hidden"></div>
 
 <!--        <div class="display-item" th:each="performance : ${artist.performances}">-->
 <!--            <a th:href="@{/users/{userId}/{artistId}/{performanceId}-->
@@ -107,35 +134,8 @@
 <!--            ></a>-->
 <!--        </div>-->
 
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
 
-        const slInput = document.querySelector('.datepicker');
-        flatpickr('.datepicker', {
-            onChange: function(selectedDates, dateStr, instance) {
-                slInput.value = dateStr;
-            }
-        })
-    })
-
-    document.addEventListener('DOMContentLoaded', function() {
-       const dateInput = document.querySelector('.datepicker');
-       const attendanceInput = document.querySelector('#performance-attendance');
-       const submitButton = document.querySelector('.add-performance-button');
-
-       // Initially disable the submit button
-       submitButton.disabled = true;
-
-       // Function to check both inputs
-       function updateButtonState() {
-           submitButton.disabled = !dateInput.value || !attendanceInput.value;
-       }
-
-       // Event listeners for both inputs
-       dateInput.addEventListener('input', updateButtonState);
-       attendanceInput.addEventListener('input', updateButtonState);
-   });
+<script src="/js/artist.js">
 </script>
 </body>
 </html>

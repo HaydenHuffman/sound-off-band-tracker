@@ -29,28 +29,27 @@
     </script>
 </head>
 <body>
-<div class="navbar">
+<nav class="navbar">
     <h3 class="logo-text text-xl">SoundOff</h3>
     <a style="margin-left:15px;" th:href="@{/users/{userId}/top-artists(userId=${user.userId})}">Top Artists</a>
     <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
 
-</div>
+</nav>
 <div class="border-solid">
     <div class="">
+        <h2>Welcome, [[${user.firstName}]]!</h2>
         <div class="artist-bar">
             <h2 style="margin-left:2em;" class="">Artists</h2>
             <a th:href="@{/users/{userId}/create(userId=${user.userId})}" class="add-artist-button">
-                    Add New Artist
+                Add New Artist
             </a>
         </div>
-        <div class="artist-list">
-            <div th:each="artist : ${user.artists}" class="artist-item">
-                <a style="text-align:center"
-                        th:href="@{/users/{userId}/{artistId}(userId=${user.userId}, artistId=${artist.artistId})}"
-                        th:text="${artist.name}"
-                ></a>
-<!--                              <img th:src="*{{artist.image}}" alt="Band Image" style="width:100px;border-radius:100px;" />-->
-            </div>
+        <div th:each="artist : ${user.artists}" class="artist-list">
+            <a th:href="@{/users/{userId}/{artistId}(userId=${user.userId}, artistId=${artist.artistId})}"
+               class="artist-item">
+                <span style="text-align:center" th:text="${artist.name}"></span>
+                <!--                              <img th:src="*{{artist.image}}" alt="Band Image" style="width:100px;border-radius:100px;" />-->
+            </a>
         </div>
     </div>
 </div>
