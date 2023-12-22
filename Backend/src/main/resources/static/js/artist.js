@@ -12,12 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     var editButtons = document.querySelectorAll(".edit-btn")
     editButtons.forEach(function(button) {
         button.addEventListener("click", function() {
-            const performanceId = button.getAttribute("data-performance-id");
-            openEditModal(button, performanceId);
-//            const form = document.querySelector(".artist-edit-form");
-//            const actionUrl = form.getAttribute("action");
-//            const updatedActionUrl = actionUrl.replace("{performanceId}", performanceId);
-//            form.setAttribute("action", updatedActionUrl);
+            const performanceId = this.getAttribute("data-performance-id");
+            const artistId = this.getAttribute("data-artist-id");
+            const userId = this.getAttribute("data-user-id");
+            openEditModal(button, userId, artistId, performanceId);
         })
     })
 })
@@ -25,16 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 
-function openEditModal(button, performanceId) {
-
-
-    const editButtonInModal = document.querySelector('.show-modal .edit-btn');
+function openEditModal(button, userId, artistId, performanceId) {
     const form = document.querySelector('.performance-edit');
-
-    button.setAttribute('data-performance-id', performanceId);
-
-     const actionUrl = form.getAttribute('action');
-     const updatedActionUrl = actionUrl.replace('{performanceId}', performanceId);
+     const updatedActionUrl = `/users/${userId}/${artistId}/${performanceId}/edit`;
      form.setAttribute('action', updatedActionUrl);
      modal.classList.remove('hidden');
      overlay.classList.remove('hidden');

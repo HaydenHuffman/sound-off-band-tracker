@@ -91,7 +91,8 @@
             <td>[[${performance.attendance}]]</td>
             <td>[[${performance.perfScore}]]</td>
             <td class="">
-                    <button class="show-modal edit-btn" th:attr="data-performance-id=${performance.performanceId}">Edit</button>
+                    <button class="show-modal edit-btn" th:attr="data-performance-id=${performance.performanceId},
+                            data-user-id=${artist.user.userId}, data-artist-id=${artist.artistId}">Edit</button>
             </td>
         </tr>
         </tbody>
@@ -101,8 +102,7 @@
     <button class="close-modal">&times;</button>
     <h1>Edit Performance</h1>
     <div class="table-container container">
-        <form class="artist-edit performance-edit" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${artist.user.userId},
-                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+        <form class="artist-edit performance-edit" action="/users/{userId}/{artistId}/{performanceId}/edit" method="post">
             <label for="performance-date">Performance Date:</label>
             <input class="datepicker" type="text" id="performance-date"
                    placeholder="Edit Date" autocomplete="off"/>
