@@ -88,6 +88,15 @@ footer a {
     height: 45px;
 }
 
+.add-performance-form {
+    display:flex;
+    flex-direction:column;
+}
+
+.add-performance-form button {
+    align-items: center;
+}
+
 .artist-bar {
     padding-top: 1em;
     display: flex;
@@ -95,6 +104,27 @@ footer a {
     align-items: center;
 }
 
+.artist-delete {
+    display: flex;
+    justify-content: center;
+}
+
+.artist-edit, .add-performance-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Adjust this as needed */
+}
+
+.artist-edit label, .add-performance-form label {
+    align-self: flex-start;
+    text-align: left;
+    width: 100%;
+}
+
+.artist-edit .form-buttons {
+    width: 75%; /* Match width of other button containers */
+}
 .artist-header {
     padding-top: 5em;
     display: flex;
@@ -141,13 +171,14 @@ footer a {
     background-color: $secondary-light;
 }
 
+.artist-performance-table tbody tr:nth-child(even) {
+    background-color: $primary-light;
+}
+
 .artist-performance-table tbody tr:hover {
     background-color: $bg-color;
 }
 
-.artist-performance-table tbody tr:nth-child(even) {
-    background-color: $primary-light;
-}
 
 .artist-performance-table td {
     min-width: 200px;
@@ -182,7 +213,18 @@ footer a {
         font-size: 18px;
         color: #ff0000; /* Red color for delete */
     }
-    
+
+    .delete-form {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .delete-form button {
+        width: 100%;
+        margin: 0;
+    }
+
     .display-item {
         height: 50px;
         width: 80%;
@@ -227,7 +269,10 @@ footer a {
         border-radius: 8px;
     }
     
-    
+    .close-modal {
+        height: 5px;
+        width:5px;
+    }
     
     .create-account-button {
         display: flex;
@@ -268,10 +313,32 @@ footer a {
     
     .form-buttons {
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
+        width: 100%;
     }
-    
+
+    .form-buttons, .add-performance-form button, .artist-edit button {
+        width: 75%;
+        margin: 10px 0;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .form-footer button {
+        width: 75%;
+    }
+
     .intro-logo {
         width: 50%;
     }
@@ -334,11 +401,19 @@ footer a {
     .navbar a {
         margin-right: 10px;
     }
+
+    .performance-edit input {
+        width: 80%;
+    }
     
     .performance-row {
         position: relative;
     }
-    
+
+    .submit-changes-button {
+        display:flex;
+        flex-direction:row;
+    }
     
     .table-container {
         margin: 20px auto;
@@ -372,10 +447,10 @@ footer a {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 70%;
+        width: 40%;
 
         background-color: white;
-        padding: 6rem;
+        padding: 2rem;
         border-radius: 5px;
         box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
         z-index: 10;
