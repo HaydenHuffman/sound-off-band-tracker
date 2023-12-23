@@ -140,11 +140,16 @@ footer a {
      padding: 10px;
      border: 1px solid #ddd;
      border-radius: 50px;
-     height: 100px;
+     height: 4em;
      width: 80%;
      background-color: $secondary-light;
      color: $secondary-dark;
      box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.artist-list {
+    display: flex;
+    justify-content: center;
 }
 
 .artist-performance-display {
@@ -187,11 +192,7 @@ footer a {
      white-space: nowrap;
     }
     
-.artist-list {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
+
     
     .artist-rating {
         width: 162px;

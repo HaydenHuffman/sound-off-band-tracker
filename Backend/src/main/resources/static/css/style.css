@@ -132,11 +132,16 @@ main {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 50px;
-  height: 100px;
+  height: 4em;
   width: 80%;
   background-color: #CBDFDE;
   color: #192655;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.artist-list {
+  display: flex;
+  justify-content: center;
 }
 
 .artist-performance-display {
@@ -176,12 +181,6 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.artist-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
 }
 
 .artist-rating {
