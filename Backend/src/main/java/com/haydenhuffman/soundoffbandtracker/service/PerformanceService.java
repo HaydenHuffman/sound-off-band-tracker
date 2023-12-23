@@ -2,13 +2,16 @@ package com.haydenhuffman.soundoffbandtracker.service;
 
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
+import com.haydenhuffman.soundoffbandtracker.dto.PerformanceDTO;
 import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PerformanceService {
@@ -20,6 +23,7 @@ public class PerformanceService {
         this.performanceRepository = performanceRepository;
         this.artistService = artistService;
     }
+
     @Transactional
     public void save(Performance performance) {
         performance.setPerfScore(performance.getAttendance() * getDayOfWeekScore(performance.getDate()));
@@ -43,9 +47,13 @@ public class PerformanceService {
         return performanceRepository.findById(performanceId).orElse(new Performance());
     }
 
-    public void deleteById(Long performanceId) {
+    public void deleteById(Long artistId, Long performanceId) {
+        Artist currentArtist = artistService.findById(artistId);
+        Performance currentPerformance = performanceRepository.findById(performanceId).orElse(new Performance());
+        artistService.findById(artistId).getPerformances().remove(currentPerformance);
         performanceRepository.deleteById(performanceId);
     }
+
     public double getDayOfWeekScore(LocalDate date) {
         Map<DayOfWeek, Double> daysOfWeekScore = Map.of(
                 DayOfWeek.MONDAY, 1.0,
@@ -61,5 +69,31 @@ public class PerformanceService {
         return daysOfWeekScore.getOrDefault(dayOfWeek, 1.0);
     }
 
+    public List<Performance> findPerformancesByArtistId(Long artistId) {
+        return performanceRepository.findAll()
+                .stream()
+                .filter(performance -> performance.getArtist() != null && artistId.equals(performance.getArtist().getArtistId()))
+                .collect(Collectors.toList());
+
+    }
+
+    public Performance findPerformanceById(Long performanceId) {
+        return (performanceRepository.findById(performanceId)).orElse(new Performance());
+    }
+
+    public PerformanceDTO convertToDTO(Performance performance) {
+        PerformanceDTO dto = new PerformanceDTO();
+        dto.setPerformanceId(performance.getPerformanceId());
+        dto.setDate(performance.getDate());
+        dto.setAttendance(performance.getAttendance());
+        dto.setPerfScore(performance.getPerfScore());
+        dto.setSales(performance.getSales());
+
+        if (performance.getArtist() != null) {
+            dto.setArtistId(performance.getArtist().getArtistId());
+        }
+
+        return dto;
+    }
 }
 

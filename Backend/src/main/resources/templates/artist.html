@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org" lang="en">
+<html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -48,18 +48,16 @@
             </div>
             <input type="hidden" th:field="${artist.user.userId}"/>
             <input type="hidden" th:field="${artist.aggScore}"/>
-            <div class="form-buttons">
-                <button class="">Confirm changes</button>
-            </div>
+            <button class="form-buttons">Confirm changes</button>
         </form>
         <form class="artist-delete"
               th:action="@{/users/{userId}/{artistId}/delete(userId=${artist.user.userId}, artistId=${artist.artistId})}"
               method="post">
-            <button type="submit">Delete Artist</button>
+            <button class="form-buttons" type="submit">Delete Artist</button>
         </form>
     </div>
     <div>
-        <form style="display:flex;flex-direction:column;"
+        <form class="add-performance-form"
               th:action="@{/users/{userId}/{artistId}/add(userId=${artist.user.userId}, artistId=${artist.artistId})}"
               th:object="${performance}" method="post">
             <label for="date">Performance Date:</label>
@@ -68,7 +66,7 @@
             <label for="performance-attendance">Total Attendance:</label>
             <input type="number" th:field="*{attendance}" id="performance-attendance" placeholder="Attendance"/>
             <input type="hidden" th:value="${artist.artistId}"/>
-            <button type="submit" class="add-performance-button">
+            <button style="width:75%;" type="submit" class="add-performance-button form-buttons">
                 Add New Performance
             </button>
         </form>
@@ -85,43 +83,32 @@
             <th></th>
         </tr>
         </thead>
-        <tbody th:each="performance : ${artist.performances}">
-        <tr class="display-item">
-            <td>[[${performance.date}]]</td>
-            <td>[[${performance.attendance}]]</td>
-            <td>[[${performance.perfScore}]]</td>
-            <td class="">
-                    <button class="show-modal edit-btn" th:attr="data-performance-id=${performance.performanceId},
-                            data-user-id=${artist.user.userId}, data-artist-id=${artist.artistId}">Edit</button>
-            </td>
-        </tr>
+        <tbody>
         </tbody>
     </table>
 </div>
 <div class="modal hidden">
     <button class="close-modal">&times;</button>
     <h1>Edit Performance</h1>
-    <div class="table-container container">
-        <form class="artist-edit performance-edit" action="/users/{userId}/{artistId}/{performanceId}/edit" method="post">
+    <div class="container form-container perfomance-edit-container">
+        <form class="artist-edit performance-edit" th:data-artist-id="${artist.artistId}"
+              th:data-user-id="${artist.user.userId}" action="/users/{userId}/{artistId}/{performanceId}/edit"
+              method="post">
             <label for="performance-date">Performance Date:</label>
-            <input class="datepicker" type="text" id="performance-date"
+            <input class="datepicker" type="text" name="date" id="performance-date"
                    placeholder="Edit Date" autocomplete="off"/>
             <br/>
             <label for="performance-attendance">Attendance Count:</label>
             <input type="number" id="performance-attendance"
-                   placeholder="Edit Attendance Count"/>
+                   name="attendance" placeholder="Edit Attendance Count"/>
 
-            <input type="hidden" th:field="${performance.artist.artistId}"/>
-            <input type="hidden" th:field="${performance.perfScore}"/>
-            <input type="hidden" th:field="${performance.performanceId}"/>
-
-            <div style="display:flex;flex-direction:row;">
-                <button class="">Submit Changes</button>
-            </div>
+            <input type="hidden" id="performance-id" name="performanceId"/>
+            <input type="hidden" id="performance-score" name="perfScore"/>
+            <input type="hidden" id="performance-artist-id" name="artistId"/>
+            <button class="form-buttons">Submit Changes</button>
         </form>
-        <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
-                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
-            <button type="submit">Delete</button>
+        <form class="delete-form" method="post">
+            <div class="form-buttons"><button type="submit">Delete</button></div>
         </form>
     </div>
 </div>

@@ -1,3 +1,6 @@
+const userId = document.querySelector('.performance-edit').getAttribute('data-user-id');
+const artistId = document.querySelector('.performance-edit').getAttribute('data-artist-id');
+
   document.addEventListener('DOMContentLoaded', () => {
 
         const slInput = document.querySelector('.datepicker');
@@ -8,25 +11,85 @@
         })
     })
 
-document.addEventListener("DOMContentLoaded", function() {
-    var editButtons = document.querySelectorAll(".edit-btn")
-    editButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            const performanceId = this.getAttribute("data-performance-id");
-            const artistId = this.getAttribute("data-artist-id");
-            const userId = this.getAttribute("data-user-id");
-            openEditModal(button, userId, artistId, performanceId);
-        })
+
+function loadPerformances(userId, artistId) {
+    fetch(`/users/${userId}/${artistId}/performances`)
+    .then(response => {
+        console.log(response);
+        return response.json();
     })
+    .then(performances => {
+        console.log(performances);
+        displayPerformances(performances);
+    })
+    .catch(error => console.error('Error fetching performances: error'))
+}
+
+function displayPerformances(performances) {
+    const tableBody = document.querySelector('.artist-performance-table tbody');
+    tableBody.innerHTML = '';
+
+    performances.forEach(performance => {
+        const row = document.createElement('tr');
+        row.className = 'display-item';
+
+        row.innerHTML = `
+        <td class='.date-cell'>${performance.date}</td>
+        <td class='attendance-cell'>${performance.attendance}</td>
+        <td>${performance.perfScore}</td>
+        <td>
+            <button data-performance-id="${performance.performanceId}" class="show-modal edit-btn">Edit</button>
+        </td>
+        `;
+        tableBody.appendChild(row);
+    })
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadPerformances(userId, artistId)
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tableContainer = document.querySelector('.artist-performance-table');
+
+    tableContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('edit-btn')) {
+            const button = event.target;
+            openEditModal(button);
+        }
+    });
+});
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 
-function openEditModal(button, userId, artistId, performanceId) {
-    const form = document.querySelector('.performance-edit');
-     const updatedActionUrl = `/users/${userId}/${artistId}/${performanceId}/edit`;
-     form.setAttribute('action', updatedActionUrl);
+function openEditModal(button) {
+    const performanceId = button.getAttribute('data-performance-id');
+    fetch(`/users/${userId}/${artistId}/performances/${performanceId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(performance => {
+            console.log(performance);
+            populateModal(performance);
+        })
+        .catch(error => console.error('Error fetching performance details:', error));
+}
+
+function populateModal(performance) {
+    const modalForm = document.querySelector('.performance-edit');
+    const deleteForm = document.querySelector('.delete-form');
+    modalForm.querySelector('#performance-date').value = performance.date;
+    modalForm.querySelector('#performance-attendance').value = performance.attendance;
+    modalForm.querySelector('#performance-id').value = performance.performanceId;
+    modalForm.querySelector('#performance-score').value = performance.perfScore;
+    modalForm.querySelector('#performance-artist-id').value = performance.artistId;
+    modalForm.action = `/users/${userId}/${artistId}/${performance.performanceId}/edit`;
+    deleteForm.action = `/users/${userId}/${artistId}/${performance.performanceId}/delete`;
+
      modal.classList.remove('hidden');
      overlay.classList.remove('hidden');
  }
