@@ -50,11 +50,10 @@ public class UserServiceImpl implements UserService {
                 date = date.minusDays(j);
                 performanceService.createPerformance(new Performance(date, attendance), newArtist.getArtistId());
             }
-            newArtist.setPerformances(performances);
             newArtist.setUser(user);
-            newArtists.add(newArtist);
+            user.addArtist(newArtist);
+            artistService.save(newArtist);
         }
-        user.setArtists(newArtists);
         return userRepository.save(user);
     }
 

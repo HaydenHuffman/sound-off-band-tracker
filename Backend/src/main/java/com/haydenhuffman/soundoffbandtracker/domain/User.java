@@ -165,4 +165,8 @@ public class User implements UserDetails {
     public User build() {
         return this;
     }
+
+    public void addArtist(Artist artist) {
+        this.artists.add(artist);
+    }
 }

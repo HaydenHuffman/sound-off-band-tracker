@@ -37,7 +37,7 @@
 </nav>
 <div class="border-solid">
     <div class="">
-        <h2>Welcome, [[${user.firstName}]]!</h2>
+        <h2 class="welcome-header">Welcome, [[${user.firstName}]]</h2>
         <div class="artist-bar">
             <h2 style="margin-left:2em;" class="">Artists</h2>
             <a th:href="@{/users/{userId}/create(userId=${user.userId})}" class="add-artist-button">

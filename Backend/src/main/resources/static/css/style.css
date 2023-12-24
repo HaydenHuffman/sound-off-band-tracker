@@ -52,7 +52,6 @@ input {
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #192655;
 }
 
 footer a {
@@ -196,6 +195,15 @@ main {
   font-size: 1.5em;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-artist-container {
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: white;
 }
 
 .delete-icon {
@@ -416,6 +424,11 @@ main {
   background-color: #ffffff;
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.welcome-header {
+  margin-left: 2em;
+  color: #012B39;
 }
 
 .buttons {

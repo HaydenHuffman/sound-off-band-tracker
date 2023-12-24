@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Performance</title>
     <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600&family=Kalnia:wght@500;600&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
@@ -48,8 +50,7 @@
 </head>
 <body>
 <nav class="navbar">
-    <h3 class="logo-text text-xl">SoundOff</h3>
-    <a style="margin-left:15px;" th:href="@{/users/{userId}(userId=${user.userId})}">Home</a>
+    <a th:href="@{/users/{userId}(userId=${user.userId})}"  class="logo-text text-xl">SoundOff</a   >
     <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
 
 </nav>

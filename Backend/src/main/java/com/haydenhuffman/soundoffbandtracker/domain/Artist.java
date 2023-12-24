@@ -57,8 +57,14 @@ public class Artist {
         return  this.performances;
     }
 
-    public void setPerformances(List<Performance> performances) {
-        this.performances = performances;
+//    public void setPerformances(List<Performance> performances) {this.performances = performances;}
+
+    public void addPerformance(Performance performance) {
+        this.performances.add(performance);
+    }
+
+    public void removePerformance(Performance performance) {
+        this.performances.remove(performance);
     }
 
     public User getUser() {
