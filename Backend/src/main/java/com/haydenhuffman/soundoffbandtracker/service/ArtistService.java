@@ -4,7 +4,6 @@ import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.ArtistRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,10 +13,9 @@ import java.util.*;
 @Service
 public class ArtistService {
     private ArtistRepository artistRepository;
-    private UserServiceImpl userService;
-    public ArtistService(ArtistRepository artistRepository, @Lazy UserServiceImpl userService) {
+
+    public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
-        this.userService = userService;
     }
     public Artist createRandomArtist(User user, Artist artist) {
         artist.setName(generateArtistName());
@@ -120,15 +118,7 @@ public class ArtistService {
 
     }
 
-    public List<Artist> findTopArtists(Long userId) {
-        User user = userService.findById(userId);
-        List<Artist> topArtists = user.getArtists().stream()
-                .filter(artist -> artist.getAggScore() != null)
-                .sorted((a1, a2) -> a2.getAggScore().compareTo(a1.getAggScore()))
-                .limit(5)
-                .toList();
-        return topArtists;
-    }
+
 
 
 

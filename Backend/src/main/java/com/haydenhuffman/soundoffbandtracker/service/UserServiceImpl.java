@@ -4,7 +4,6 @@ import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private ArtistService artistService;
     private PerformanceService performanceService;
 
-    public UserServiceImpl(UserRepository userRepository, @Lazy ArtistService artistService, PerformanceService performanceService) {
+    public UserServiceImpl(UserRepository userRepository, ArtistService artistService, PerformanceService performanceService) {
         this.userRepository = userRepository;
         this.artistService = artistService;
         this.performanceService = performanceService;
@@ -106,6 +105,16 @@ public class UserServiceImpl implements UserService {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public List<Artist> findTopArtists(Long userId) {
+        User user = findById(userId);
+        List<Artist> topArtists = user.getArtists().stream()
+                .filter(artist -> artist.getAggScore() != null)
+                .sorted((a1, a2) -> a2.getAggScore().compareTo(a1.getAggScore()))
+                .limit(5)
+                .toList();
+        return topArtists;
     }
 
 }

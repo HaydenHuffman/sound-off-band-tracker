@@ -65,11 +65,13 @@ footer a {
     text-decoration: none;
 }
 
+
   main {
         margin: 0 auto;
         padding: min(5%, 2.5rem) 0;
         justify-content: center;
       }
+
 
 
 .actions-column {
@@ -95,6 +97,7 @@ footer a {
 .add-performance-form button {
     align-items: center;
 }
+
 
 .artist-bar {
     padding-top: 1em;
@@ -124,6 +127,7 @@ footer a {
 .artist-edit .form-buttons {
     width: 75%; /* Match width of other button containers */
 }
+
 .artist-header {
     padding-top: 5em;
     display: flex;
@@ -139,6 +143,7 @@ footer a {
      padding: 10px;
      border: 1px solid #ddd;
      border-radius: 50px;
+
      height: 4em;
      width: 80%;
      background-color: $secondary-light;
@@ -149,7 +154,6 @@ footer a {
 .artist-list {
     display: flex;
     justify-content: center;
-}
 
 .artist-performance-display {
     max-height: 300px;
@@ -179,10 +183,10 @@ footer a {
     background-color: $primary-light;
 }
 
+
 .artist-performance-table tbody tr:hover {
     background-color: $bg-color;
 }
-
 
 .artist-performance-table td {
     min-width: 200px;
@@ -543,5 +547,4 @@ li {
 .container {
     width: 100%;
     padding: .5em;
-}
 }
