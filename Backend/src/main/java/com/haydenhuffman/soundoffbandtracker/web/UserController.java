@@ -68,6 +68,17 @@ public class UserController {
          return "user";
     }
 
+//    @GetMapping("/users/{userId}/artists")
+//    public ResponseEntity<List<Artist>> getArtists(@PathVariable Long userId)
+        
+                                                   
+
+
+
+
+
+
+
     @GetMapping("/users/{userId}/top-artists")
     public String getUsersTopArtists(@PathVariable Long userId, Model model) {
         List<Artist> topArtists = userService.findTopArtists(userId);

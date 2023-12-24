@@ -17,8 +17,8 @@ public class ArtistService {
     public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
-    public Artist createNewArtist(User user, Artist artist) {
-        artist.setName(createArtistName());
+    public Artist createRandomArtist(User user, Artist artist) {
+        artist.setName(generateArtistName());
         artist.setUser(user);
         artistRepository.save(artist);
         user.getArtists().add(artist);
@@ -37,6 +37,13 @@ public class ArtistService {
     public void delete(Long artistId) {
         artistRepository.deleteById(artistId);
     }
+
+    public void createNewArtist(User user, Artist artist) {
+        artist.setUser(user);
+        artistRepository.save(artist);
+        user.getArtists().add(artist);
+    }
+
 
     public Double calculateAggScore(Artist artist) {
         if (artist.getPerformances() == null || artist.getPerformances().isEmpty()) {
@@ -81,7 +88,7 @@ public class ArtistService {
         artistRepository.save(artist);
     }
 
-    public String createArtistName(){
+    public String generateArtistName(){
         List<String> prefixes = Arrays.asList("Flaming", "Black", "Talking", "Broken", "Ashen", "Rainbow",
                 "Wandering", "Lost", "Breathing", "Rough", "Rolling", "Thundering", "Hipster", "Punk", "Goth",
                 "White", "Pale", "Lunar", "Mystic", "Screaming", "Sexy", "Diabolical", "Evil", "Thumping",
@@ -110,6 +117,8 @@ public class ArtistService {
 
 
     }
+
+
 
 
 

@@ -6,13 +6,14 @@ import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/users/{userId}")
 public class ArtistController {
 
     private ArtistService artistService;
@@ -23,7 +24,7 @@ public class ArtistController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}/{artistId}")
+    @GetMapping("/{artistId}")
     public String getOneArtist(@PathVariable Long userId, @PathVariable Long artistId, ModelMap model) {
         Artist artist = artistService.findById(artistId);
         Performance performance = new Performance();
@@ -32,7 +33,7 @@ public class ArtistController {
         return "artist";
     }
 
-    @PostMapping("/{userId}/{artistId}")
+    @PostMapping("/{artistId}")
     public String updateOneArtist(@PathVariable Long userId,
                                   @ModelAttribute Artist artist) throws IOException {
 
@@ -41,17 +42,27 @@ public class ArtistController {
         return "redirect:/users/" + userId + "/" + artist.getArtistId();
     }
 
-    @PostMapping("/{userId}/create")
+    @GetMapping("/create")
+    public String getCreateNewArtist(Model model, @PathVariable Long userId) {
+        model.addAttribute("artist", new Artist());
+        User currentUser = userService.findById(userId);
+        model.addAttribute("user", currentUser);
+        return "create-artist";
+    }
+
+    @PostMapping("/create")
     public String createNewArtist(@PathVariable Long userId, @ModelAttribute Artist artist) throws IOException, InterruptedException {
         User user = userService.findById(userId);
-        artist.setUser(user);
         artistService.createNewArtist(user, artist);
         return "redirect:/users/" + userId;
     }
 
 
-    @PostMapping("{userId}/{artistId}/delete")
+    @PostMapping("/{artistId}/delete")
     public String deleteArtist(@PathVariable Long userId, @PathVariable Long artistId) {
+        Artist artist = artistService.findById(artistId);
+        artist.getPerformances().clear();
+        artistService.save(artist);
         artistService.delete(artistId);
         return "redirect:/users/" + userId;
     }

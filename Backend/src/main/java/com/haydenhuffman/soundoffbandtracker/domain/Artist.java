@@ -14,14 +14,17 @@ public class Artist {
     private Long artistId;
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Performance> performances;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
-    private String image;
     private Double aggScore;
+
+    private String mainContact;
+    private String phoneNumber;
+    private String description;
 
     public Artist() {
     }
@@ -54,8 +57,14 @@ public class Artist {
         return  this.performances;
     }
 
-    public void setPerformances(List<Performance> performances) {
-        this.performances = performances;
+//    public void setPerformances(List<Performance> performances) {this.performances = performances;}
+
+    public void addPerformance(Performance performance) {
+        this.performances.add(performance);
+    }
+
+    public void removePerformance(Performance performance) {
+        this.performances.remove(performance);
     }
 
     public User getUser() {
@@ -66,13 +75,6 @@ public class Artist {
         this.user = user;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public Double getAggScore() {
         return aggScore;
@@ -82,6 +84,30 @@ public class Artist {
         this.aggScore = aggScore;
     }
 
+    public String getMainContact() {
+        return mainContact;
+    }
+
+    public void setMainContact(String mainContact) {
+        this.mainContact = mainContact;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Artist{" +
@@ -89,7 +115,6 @@ public class Artist {
                 ", name='" + name + '\'' +
 //                ", performances=" + performances +
                 ", user=" + user +
-                ", image='" + image + '\'' +
 //                ", aggScore=" + aggScore +
                 '}';
     }

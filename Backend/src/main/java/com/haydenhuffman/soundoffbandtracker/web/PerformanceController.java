@@ -3,13 +3,17 @@ package com.haydenhuffman.soundoffbandtracker.web;
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
+import com.haydenhuffman.soundoffbandtracker.dto.PerformanceDTO;
 import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
 import com.haydenhuffman.soundoffbandtracker.service.ArtistService;
 import com.haydenhuffman.soundoffbandtracker.service.PerformanceService;
 import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users/{userId}/{artistId}")
@@ -34,6 +38,20 @@ public class PerformanceController {
         return "redirect:/users/" + userId + "/" + artistId;
     }
 
+    @GetMapping("/performances")
+    public ResponseEntity<List<Performance>> getPerformances(@PathVariable Long artistId) {
+        List<Performance> performances = performanceService.findPerformancesByArtistId(artistId);
+        return ResponseEntity.ok(performances);
+    }
+
+
+    @GetMapping("/performances/{performanceId}")
+    public ResponseEntity<PerformanceDTO> getPerformance(@PathVariable Long performanceId) {
+        Performance performance = performanceService.findPerformanceById(performanceId);
+        PerformanceDTO dto = performanceService.convertToDTO(performance);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/{performanceId}")
     public String getPerformance(@PathVariable Long userId, @PathVariable Long artistId, @PathVariable Long performanceId, ModelMap model) {
         Artist artist = artistService.findById(artistId);
@@ -47,7 +65,7 @@ public class PerformanceController {
 
     @PostMapping("/{performanceId}/delete")
     public String deletePerformance(@PathVariable Long performanceId, @PathVariable Long userId, @PathVariable Long artistId) {
-        performanceService.deleteById(performanceId);
+        performanceService.deleteById(artistId, performanceId);
         return "redirect:/users/" + userId + "/" + artistId;
     }
 

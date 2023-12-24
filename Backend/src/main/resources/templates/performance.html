@@ -1,5 +1,5 @@
 <!DOCTYPE>
-<html xmlns:th="www.thymeleaf.org" lang="en">
+<html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,48 +7,88 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Performance</title>
     <link rel="stylesheet" href="/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600&family=Kalnia:wght@500;600&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+         /* Add some basic styling for the form */
+        body {
+          font-family: Arial, sans-serif;
+        }
+        .container {
+          width: 300px;
+          padding: 16px;
+          background-color: white;
+          margin: 0 auto;
+          margin-top: 50px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        input[type=text], input[type=password] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          display: inline-block;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
+        }
+        button {
+          background-color: #4CAF50;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+        }
+        button:hover {
+          opacity: 0.8;
+        }
     </style>
 </head>
 <body>
-<div class="navbar">
-    <h3 class="logo-text text-xl">SoundOff</h3>
-    <a style="margin-left:15px;" th:href="@{/users/{userId}(userId=${user.userId})}">Home</a>
+<nav class="navbar">
+    <a th:href="@{/users/{userId}(userId=${user.userId})}"  class="logo-text text-xl">SoundOff</a   >
     <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
 
+</nav>
+<div>
+    <div class="table-container container">
+        <form class="artist-edit" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+            <label for="performance-date">Performance Date:</label>
+            <input class="datepicker" type="text" id="performance-date" th:field="${performance.date}"
+                       placeholder="Edit Date" autocomplete="off"/>
+
+            <label for="performance-attendance">Attendance Count:</label>
+            <input type="number" id="performance-attendance" th:field="${performance.attendance}"
+                       placeholder="Edit Attendance Count"/>
+
+            <input type="hidden" th:field="${performance.artist.artistId}"/>
+            <input type="hidden" th:field="${performance.perfScore}"/>
+
+            <div style="display:flex;flex-direction:row;">
+                <button class="">Submit Changes</button>
+                <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
+                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </form>
+    </div>
 </div>
-    <form class="edit-form" th:action="@{/users/{userId}/{artistId}/{performanceId}/edit(userId=${user.userId},
-                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
-        <div class="artist-field">
-            <input class="datepicker" type="text" id="performance-date" th:field="${performance.date}" placeholder="Edit Date" autocomplete="off" />
-        </div>
-        <div class="artist-field">
-            <input type="number" id="performance-attendance" th:field="${performance.attendance}" placeholder="Edit Attendance Count" />
-        </div>
-        <input type="hidden" th:field="${performance.artist.artistId}" />
-        <input type="hidden" th:field="${performance.perfScore}" />
+<script src="/js/artist.js">
+    document.addEventListener('DOMContentLoaded', () => {
 
-        <div style="display:flex;flex-direction:row;">
-            <button class="">Submit Changes</button>
-            <form th:action="@{/users/{userId}/{artistId}/{performanceId}/delete(userId=${artist.user.userId},
-                            artistId=${artist.artistId}, performanceId=${performance.performanceId})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-    </form>
-    <script src="/js/artist.js">
-        document.addEventListener('DOMContentLoaded', () => {
-
-       const slInput = document.querySelector('.datepicker');
-       flatpickr('.datepicker', {
-           onChange: function(selectedDates, dateStr, instance) {
-               slInput.value = dateStr;
-           }
-       })
+   const slInput = document.querySelector('.datepicker');
+   flatpickr('.datepicker', {
+       onChange: function(selectedDates, dateStr, instance) {
+           slInput.value = dateStr;
+       }
    })
-    </script>
+})
+</script>
 </body>
 </html>

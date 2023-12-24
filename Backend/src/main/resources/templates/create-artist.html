@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Create New Artist</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600&family=Kalnia:wght@500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<nav class="navbar">
+    <a class="logo-text" th:href="@{/users/{userId}(userId=${user.userId})}">SoundOff</a>
+    <a style="margin-left:15px;" th:href="@{/users/{userId}/top-artists(userId=${user.userId})}">Top Artists</a>
+    <a style="margin-left: 100px;" th:href="@{/logout}">Logout</a>
+
+</nav>
+  <main>
+      <div class="create-artist-container">
+          <form th:action="@{/users/{userId}/create(userId=${user.userId})}" method="post"
+            class="artist-edit">
+              <div class="artist-field">
+                Artist Name:*<br/><input type="text" id="artist-name" th:field="${artist.name}" required/>
+              </div>
+              <div class="artist-field">
+                  Main Contact:<br/><input type="text" id="artist-contact" th:field="${artist.mainContact}" />
+              </div>
+              <div class="artist-field">
+                  Contact #:<br/><input type="text" id="artist-contact-number" th:field="${artist.phoneNumber}" />
+              </div>
+
+              <div class="artist-field">
+                  Description:<br/><input type="text" id="artist-description" th:field="${artist.description}" />
+              </div>
+              <button>Create Artist</button>
+          </form>
+      </div>
+  </main>
+</body>
+</html>
