@@ -11,12 +11,14 @@ import com.haydenhuffman.soundoffbandtracker.security.AuthenticationServiceImpl;
 import com.haydenhuffman.soundoffbandtracker.security.JwtService;
 import com.haydenhuffman.soundoffbandtracker.service.RefreshTokenService;
 import com.haydenhuffman.soundoffbandtracker.service.UserServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -40,24 +42,25 @@ public class AuthenticationController {
     
 
     @GetMapping("/signin")
-	public String getLogin (Model model) {
+	public String getLogin (HttpSession session, Model model) {
         if (!model.containsAttribute("user")) {
             model.addAttribute("user", new User());
         }
 		return "login";
 	}
-    
 
-//    @GetMapping("/signin")
-//    public String getLogin() {
+    @PostMapping("/users/exists")
+    @ResponseBody
+    public Boolean postExists(@RequestBody User user) {
+        user = userService.findUserByEmail(user.getEmail()).orElse(new User());
+        return (user.getEmail() != null);
+    }
+
+//    @GetMapping("/login-error")
+//    public String loginError (Model model) {
+//    	model.addAttribute("loginError", true);
 //    	return "login";
 //    }
-    
-    @GetMapping("/login-error")
-    public String loginError (Model model) {
-    	model.addAttribute("loginError", true);
-    	return "login";
-    }
     
 
     @PostMapping("/signin")

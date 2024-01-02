@@ -19,6 +19,7 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private String password;
+    @Column(unique = true)
     private String email;
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)

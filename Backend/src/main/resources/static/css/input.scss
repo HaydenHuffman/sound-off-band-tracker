@@ -5,212 +5,218 @@ $secondary-dark: #192655;
 $secondary-light: #CBDFDE;
 
 a {
-    color: $primary-dark;
-    text-decoration: none;
+  color: $primary-dark;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 body {
-    font-family: 'DM Sans', sans-serif !important;
-    background-color: $bg-color;
-    margin: 0;
-    padding: 0px;
-    box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif !important;
+  background-color: $bg-color;
+  margin: 0;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    height: 40px;
-    width: 100px;
-    border-radius: 5px;
-    background-color: $primary-dark;
-    color: $primary-light;
-    font-family:inherit;
-    font-size: .75em;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  height: 40px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: $primary-dark;
+  color: $primary-light;
+  font-family: inherit;
+  font-size: .75em;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
 }
 
 button:hover {
-    color: $primary-dark;
-    background-color: $primary-light;
+  color: $primary-dark;
+  background-color: $primary-light;
 }
 
 input {
-    border: 0;
-    height: 40px;
-    width: 200px;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
-    font-family:inherit;
-    font-size: inherit;
+  border: 0;
+  height: 40px;
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  font-family: inherit;
+  font-size: inherit;
 }
 
 footer {
-    text-align: center;
-    padding: 20px;
-
+  text-align: center;
+  padding: 20px;
 }
 
 footer a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 
-  main {
-        margin: 0 auto;
-        padding: min(5%, 2.5rem) 0;
-        justify-content: center;
-      }
-
+main {
+  margin: 0 auto;
+  padding: min(5%, 2.5rem) 0;
+  justify-content: center;
+}
 
 
 .actions-column {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    padding: 4px;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding: 4px;
+  gap: 15px;
 }
 
 
 .add-artist-button {
-    margin-right: 5em;
-    height: 45px;
+  margin-right: 5em;
+  height: 45px;
 }
 
 .add-performance-form {
-    display:flex;
-    flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 .add-performance-form button {
-    align-items: center;
+  align-items: center;
 }
 
 
 .artist-bar {
-    padding-top: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .artist-delete {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .artist-edit, .add-performance-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Adjust this as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Adjust this as needed */
 }
 
 .artist-edit label, .add-performance-form label {
-    align-self: flex-start;
-    text-align: left;
-    width: 100%;
+  align-self: flex-start;
+  text-align: left;
+  width: 100%;
 }
 
 .artist-edit .form-buttons {
-    width: 75%; /* Match width of other button containers */
+  width: 75%; /* Match width of other button containers */
 }
 
 .artist-header {
-    padding-top: 5em;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  padding-top: 5em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .artist-item {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     margin: 10px;
-     padding: 10px;
-     border: 1px solid #ddd;
-     border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
 
-     height: 4em;
-     width: 80%;
-     background-color: $secondary-light;
-     color: $secondary-dark;
-     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  height: 4em;
+  width: 80%;
+  background-color: $secondary-light;
+  color: $secondary-dark;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .artist-list {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
 
 .artist-performance-display {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
 }
 
 .artist-performance-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    margin: 20px 0;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 20px 0;
 }
 
 .artist-performance-table th, .artist-performance-table td {
-    padding: 12px;
-    text-align: center;
+  padding: 12px;
+  text-align: center;
 }
 
 .artist-performance-table th {
-    background-color: $secondary-light;
+  background-color: $secondary-light;
 }
 
 .artist-performance-table tbody tr:nth-child(even) {
-    background-color: $primary-light;
+  background-color: $primary-light;
 }
 
 
 .artist-performance-table tbody tr:hover {
-    background-color: $bg-color;
+  background-color: $bg-color;
 }
 
 .artist-performance-table td {
-    min-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-     white-space: nowrap;
-    }
-    
-
-    
-.artist-rating {
-    width: 162px;
-    height: 100px;
-    padding: 1em;
-    background-color: $primary-dark;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+
+.artist-rating {
+  width: 162px;
+  height: 100px;
+  padding: 1em;
+  background-color: $primary-dark;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 
 .create-artist-container {
   margin: 20px auto;
@@ -244,7 +250,6 @@ footer a {
   border: 2px solid #ffffff;
 
 
-
 }
 
 .edit-form {
@@ -269,8 +274,8 @@ footer a {
 }
 
 .input-container sl-input {
-flex: 1;
-max-width: 200px;
+  flex: 1;
+  max-width: 200px;
 }
 
 .card {
@@ -284,7 +289,7 @@ max-width: 200px;
 
 .close-modal {
   height: 5px;
-  width:5px;
+  width: 5px;
 }
 
 .create-account-button {
@@ -372,7 +377,7 @@ max-width: 200px;
 .intro-section h1 {
   font-weight: 600;
   font-size: 4em;
-   color: $primary-dark;
+  color: $primary-dark;
 }
 
 .intro-section p {
@@ -424,8 +429,8 @@ max-width: 200px;
 }
 
 .submit-changes-button {
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
 }
 
 .table-container {
@@ -449,7 +454,6 @@ max-width: 200px;
   margin-left: 2em;
   color: $primary-dark;
 }
-
 
 
 .buttons {
@@ -485,16 +489,15 @@ max-width: 200px;
   z-index: 5;
 }
 
-    
 
 /* Hide components while empty */
 sl-button, sl-input {
-display: none;
+  display: none;
 }
 
 /* Show components when they are defined */
 sl-button:defined, sl-input:defined {
-display: inline-block;
+  display: inline-block;
 }
 
 ul {
@@ -508,43 +511,44 @@ li {
 }
 
 @media screen and (max-width: 600px) {
-.artist-performance-table button {
-        padding: 8px;
-    }
+  .artist-performance-table button {
+    padding: 8px;
+  }
 
-.actions-column button{
+  .actions-column button {
     flex-direction: column;
     gap: 10px;
-}
+  }
 
-.feature-cards {
-        flex-direction: column;
-        width: 100%;
-}
+  .feature-cards {
+    flex-direction: column;
+    width: 100%;
+  }
 
-.intro-section {
-  flex-direction: column;
-}
+  .intro-section {
+    flex-direction: column;
+  }
 
-.intro-logo {
-  width: 70%;
-  max-width: 200px;
+  .intro-logo {
+    width: 70%;
+    max-width: 200px;
 
-}
+  }
 
-.card {
+  .card {
     width: 80%;
     margin: 10px auto;
-}
+  }
 
-.v-rule {
-  width: 80%;
-  height: 2px;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
+  .v-rule {
+    width: 80%;
+    height: 2px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
 
-.container {
+  .container {
     width: 100%;
     padding: .5em;
+  }
 }

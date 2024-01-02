@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         for (int i = 0; i < 5; i++) {
             Artist newArtist = artistService.createRandomArtist(user, new Artist());
             List<Performance> performances = new ArrayList<>();
-            for (int j = 3; j < 6; j++){
+            for (int j = 3; j < 6; j++) {
                 Double attendance = (double) (random.nextInt(81) + 20);
                 date = date.minusDays(j);
                 performanceService.createPerformance(new Performance(date, attendance), newArtist.getArtistId());

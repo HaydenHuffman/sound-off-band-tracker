@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String postCreateUser(ModelMap model, SignUpRequest request) {
+    public String postCreateUser(RedirectAttributes redirectAttributes, ModelMap model, SignUpRequest request) {
         Optional<User> existingUser = userService.findUserByEmail(request.email());
         if (existingUser.isEmpty()) {
             JwtAuthenticationResponse signupResponse = authenticationService.signup(request);
@@ -54,10 +55,11 @@ public class UserController {
                 model.addAttribute("user", new User());
                 return "login";
             } else {
-                return "error";
+                return "login-error";
             }
         } else {
-            return "userExists";
+            redirectAttributes.addFlashAttribute("errorMessage", "Username already exists");
+            return "redirect:/register";
         }
     }
     @GetMapping("/users/{userId}")
