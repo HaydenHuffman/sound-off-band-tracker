@@ -46,6 +46,7 @@ public class PerformanceService {
         findAndSetPerPersonAverage(performance);
         double score = calculatePerformanceScore(performance);
         performance.setPerfScore(score);
+        artistService.updateArtistAggScore(currentArtist);
         performance.setArtist(currentArtist);
         currentArtist.getPerformances().add(performance);
         artistService.updateArtistAggScore(currentArtist);
@@ -67,6 +68,7 @@ public class PerformanceService {
         Artist currentArtist = artistService.findById(artistId);
         Performance currentPerformance = performanceRepository.findById(performanceId).orElse(new Performance());
         artistService.findById(artistId).getPerformances().remove(currentPerformance);
+        artistService.updateArtistAggScore(currentArtist);
         performanceRepository.deleteById(performanceId);
     }
 
@@ -82,7 +84,8 @@ public class PerformanceService {
         );
 
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return daysOfWeekScore.getOrDefault(dayOfWeek, 1.0);
+        Double currentScore = daysOfWeekScore.getOrDefault(dayOfWeek, 1.0);
+        return currentScore;
     }
 
     public List<Performance> findPerformancesByArtistId(Long artistId) {
