@@ -7,6 +7,8 @@ import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,22 +28,36 @@ public class PerformanceService {
 
     @Transactional
     public void save(Performance performance) {
-        performance.setPerfScore(performance.getAttendance() * getDayOfWeekScore(performance.getDate()));
+        findAndSetPerPersonAverage(performance);
+        performance.setPerfScore(calculatePerformanceScore(performance));
         performanceRepository.save(performance);
         performance.getArtist().setAggScore(artistService.calculateAggScore(performance.getArtist()));
     }
 
-    public void createPerformance(Performance performance, Long artistId) {
+    private static void findAndSetPerPersonAverage(Performance performance) {
+        BigDecimal sales = new BigDecimal(performance.getSales());
+        BigDecimal attendance = new BigDecimal(performance.getAttendance());
+        BigDecimal average = sales.divide(attendance, 2, RoundingMode.HALF_UP);
+        performance.setPerPersonAverage(average.doubleValue());
+    }
+
+    public Performance createPerformance(Performance performance, Long artistId) {
         Artist currentArtist = artistService.findById(artistId);
-        double score = performance.getAttendance() * getDayOfWeekScore(performance.getDate());
-        score = Math.round(score * 10.0) / 10.0; // Rounding to 1 decimal place
+        findAndSetPerPersonAverage(performance);
+        double score = calculatePerformanceScore(performance);
         performance.setPerfScore(score);
         performance.setArtist(currentArtist);
         currentArtist.getPerformances().add(performance);
         artistService.updateArtistAggScore(currentArtist);
-        performanceRepository.save(performance);
-
+        return performance;
     }
+
+    private double calculatePerformanceScore(Performance performance) {
+        double score = performance.getAttendance() * getDayOfWeekScore(performance.getDate()) * (performance.getPerPersonAverage() / 25); // This number is hardcoded based on my venue. Either add your own or create logic to compare it to the average PPA for all performances
+        score = Math.round(score * 10.0) / 10.0; // Rounding to 1 decimal place
+        return score;
+    }
+
 
     public Performance findById(Long performanceId) {
         return performanceRepository.findById(performanceId).orElse(new Performance());

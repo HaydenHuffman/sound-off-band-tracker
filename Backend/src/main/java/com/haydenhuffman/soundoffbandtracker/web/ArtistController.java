@@ -37,8 +37,8 @@ public class ArtistController {
     public String updateOneArtist(@PathVariable Long userId,
                                   @ModelAttribute Artist artist) throws IOException {
 
-
-        artistService.save(artist);
+        User user = userService.findById(userId);
+        artistService.save(user, artist);
         return "redirect:/users/" + userId + "/" + artist.getArtistId();
     }
 
@@ -60,9 +60,10 @@ public class ArtistController {
 
     @PostMapping("/{artistId}/delete")
     public String deleteArtist(@PathVariable Long userId, @PathVariable Long artistId) {
+        User user = userService.findById(userId);
         Artist artist = artistService.findById(artistId);
         artist.getPerformances().clear();
-        artistService.save(artist);
+        artistService.save(user, artist);
         artistService.delete(artistId);
         return "redirect:/users/" + userId;
     }

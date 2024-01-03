@@ -4,6 +4,9 @@ import com.haydenhuffman.soundoffbandtracker.domain.Artist;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.ArtistRepository;
+import com.haydenhuffman.soundoffbandtracker.repository.PerformanceRepository;
+import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,13 +16,19 @@ import java.util.*;
 @Service
 public class ArtistService {
     private ArtistRepository artistRepository;
+    private PerformanceRepository performanceRepository;
+    private UserRepository userRepository;
 
-    public ArtistService(ArtistRepository artistRepository) {
+    public ArtistService(ArtistRepository artistRepository, PerformanceRepository performanceRepository, UserRepository userRepository) {
         this.artistRepository = artistRepository;
+        this.performanceRepository = performanceRepository;
+        this.userRepository = userRepository;
     }
+
     public Artist createRandomArtist(User user, Artist artist) {
         artist.setName(generateArtistName());
         artist.setUser(user);
+        userRepository.save(user);
         artistRepository.save(artist);
         user.getArtists().add(artist);
         return artist;
@@ -27,14 +36,19 @@ public class ArtistService {
 
     public Artist findById(Long artistId) {
         Optional<Artist> artistOpt = artistRepository.findById(artistId);
-        return artistOpt.orElse(new Artist());
+        Artist artist = artistOpt.orElse(new Artist());
+        Hibernate.initialize(artist.getPerformances()); // Initialize performances
+        return artist;
     }
 
-    public void save(Artist artist) {
+    public void save(User user, Artist artist) {
+        artist.setUser(user);
         artistRepository.save(artist);
     }
 
     public void delete(Long artistId) {
+        Artist artist = findById(artistId);
+        performanceRepository.deleteAll(artist.getPerformances());
         artistRepository.deleteById(artistId);
     }
 
@@ -49,8 +63,9 @@ public class ArtistService {
         if (artist.getPerformances() == null || artist.getPerformances().isEmpty()) {
             return 0.0;
         }
-
-        Double artistAggScore = calculateAverageRating(artist) * (1.1 - (1 / daysSinceLastPerformance(artist)));
+        Double average = calculateAverageRating(artist);
+        Long daysSinceLastPerformance = daysSinceLastPerformance(artist.getArtistId());
+        Double artistAggScore = average * (1.1 - (1 / daysSinceLastPerformance));
         Double roundedAggScore = (double) (Math.round(artistAggScore * 10) / 10);
         return roundedAggScore;
     }
@@ -69,12 +84,13 @@ public class ArtistService {
         return totalRating;
     }
 
-    public Long daysSinceLastPerformance(Artist artist) {
-        if (artist.getPerformances() == null || artist.getPerformances().isEmpty()) {
+    public Long daysSinceLastPerformance(Long artistId) {
+        Artist currentArtist = findById(artistId);
+        if (currentArtist.getPerformances() == null || currentArtist.getPerformances().isEmpty()) {
             return 0L;
         }
 
-        return artist.getPerformances().stream()
+        return currentArtist.getPerformances().stream()
                 .filter(performance -> performance.getDate() != null)
                 .max(Comparator.comparing(Performance::getDate))
                 .map(Performance::getDate)
@@ -85,10 +101,10 @@ public class ArtistService {
     public void updateArtistAggScore(Artist artist) {
         double newScore = calculateAggScore(artist);
         artist.setAggScore(newScore);
-        artistRepository.save(artist);
+//        artistRepository.save(artist);
     }
 
-    public String generateArtistName(){
+    public String generateArtistName() {
         List<String> prefixes = Arrays.asList("Flaming", "Black", "Talking", "Broken", "Ashen", "Rainbow",
                 "Wandering", "Lost", "Breathing", "Rough", "Rolling", "Thundering", "Hipster", "Punk", "Goth",
                 "White", "Pale", "Lunar", "Mystic", "Screaming", "Sexy", "Diabolical", "Evil", "Thumping",
@@ -117,9 +133,6 @@ public class ArtistService {
 
 
     }
-
-
-
 
 
 }

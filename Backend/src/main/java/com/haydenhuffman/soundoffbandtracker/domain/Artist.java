@@ -14,7 +14,7 @@ public class Artist {
     private Long artistId;
     private String name;
     @JsonManagedReference
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Performance> performances;
     @JsonBackReference
     @ManyToOne

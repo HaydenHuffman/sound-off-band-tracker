@@ -1,9 +1,13 @@
 package com.haydenhuffman.soundoffbandtracker.service;
 
 import com.haydenhuffman.soundoffbandtracker.domain.Artist;
+import com.haydenhuffman.soundoffbandtracker.domain.Authority;
 import com.haydenhuffman.soundoffbandtracker.domain.Performance;
 import com.haydenhuffman.soundoffbandtracker.domain.User;
 import com.haydenhuffman.soundoffbandtracker.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.junit.platform.commons.logging.Logger;
+import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private ArtistService artistService;
     private PerformanceService performanceService;
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     public UserServiceImpl(UserRepository userRepository, ArtistService artistService, PerformanceService performanceService) {
         this.userRepository = userRepository;
@@ -37,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return userOpt.orElse(new User());
     }
 
-    public User addUserData(User user) {
+    public void addUserData(User user) {
         LocalDate date = LocalDate.now();
         Random random = new Random();
         List<Artist> newArtists = new ArrayList<>();
@@ -45,15 +51,16 @@ public class UserServiceImpl implements UserService {
             Artist newArtist = artistService.createRandomArtist(user, new Artist());
             List<Performance> performances = new ArrayList<>();
             for (int j = 3; j < 6; j++) {
-                Double attendance = (double) (random.nextInt(81) + 20);
+                Double attendance = (double) (random.nextInt(81) + 20); // Create random attendance between 80 and 100
+                Double sales = (double) (random.nextInt(1501) + 1500); // Create random $ between 1500 - 3000
                 date = date.minusDays(j);
-                performanceService.createPerformance(new Performance(date, attendance), newArtist.getArtistId());
+                Performance newPerformance = performanceService.createPerformance(new Performance(date, attendance, sales), newArtist.getArtistId());
+                performanceService.save(newPerformance);
             }
             newArtist.setUser(user);
             user.addArtist(newArtist);
-            artistService.save(newArtist);
+            artistService.save(user, newArtist);
         }
-        return userRepository.save(user);
     }
 
     @Override
@@ -73,22 +80,35 @@ public class UserServiceImpl implements UserService {
         };
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) {
-//    	User user = userRepository.findByEmail(username)
-//    			.orElseThrow(() -> new UsernameNotFoundException("User not found" + username));
-//
-//    	List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
-//    			.map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
-//    			.collect(Collectors.toList());
-//
-//    	return user;
-//    }
-
-    //    @Override
     @Secured({"ROLE_ADMIN"})
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Secured("ROLE_ADMIN")
+    @Transactional // This annotation ensures that changes are committed to the database
+    public void elevateUserToAdmin(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Check if the user doesn't already have the admin role
+            if (user.getAuthorities().stream().noneMatch(auth -> "ROLE_ADMIN".equals(auth.getAuthority()))) {
+                // Add the admin role to the user
+                Authority adminAuthority = new Authority("ROLE_ADMIN");
+                adminAuthority.setUser(user);
+                user.getAuthorities().add(adminAuthority);
+
+//                logger.info("Setting Auth for user: " + user.getId() + user.getEmail());
+//                logger.info("Setting Authorities: " + user.getAuthorities());
+
+                // Save the updated user
+                userRepository.save(user);
+            }
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
     }
 
     public User registerUser(User user) {

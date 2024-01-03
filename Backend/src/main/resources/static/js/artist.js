@@ -34,8 +34,9 @@ function displayPerformances(performances) {
         row.className = 'display-item';
 
         row.innerHTML = `
-        <td class='.date-cell'>${performance.date}</td>
+        <td class='date-cell'>${performance.date}</td>
         <td class='attendance-cell'>${performance.attendance}</td>
+        <td class='sales-cell'>$${performance.perPersonAverage}</td>
         <td>${performance.perfScore}</td>
         <td>
             <button data-performance-id="${performance.performanceId}" class="show-modal edit-btn">Edit</button>
@@ -84,6 +85,7 @@ function populateModal(performance) {
     const deleteForm = document.querySelector('.delete-form');
     modalForm.querySelector('#performance-date').value = performance.date;
     modalForm.querySelector('#performance-attendance').value = performance.attendance;
+    modalForm.querySelector('#performance-sales').value = performance.sales;
     modalForm.querySelector('#performance-id').value = performance.performanceId;
     modalForm.querySelector('#performance-score').value = performance.perfScore;
     modalForm.querySelector('#performance-artist-id').value = performance.artistId;

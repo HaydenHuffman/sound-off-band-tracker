@@ -33,8 +33,8 @@ public class PerformanceController {
 
     @PostMapping("/add")
     public String addPerformance(@PathVariable Long userId, @PathVariable Long artistId, @ModelAttribute Performance performance) {
-        performanceService.createPerformance(performance, artistId);
-        // System.out.println(performance);
+        Performance newPerformance = performanceService.createPerformance(performance, artistId);
+        performanceService.save(newPerformance);
         return "redirect:/users/" + userId + "/" + artistId;
     }
 

@@ -53,8 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(passwordEncoder.encode(request.password()))
                 .authority(Role.USER.name()).build();
         request.authorityOpt().ifPresent(auth -> user.getAuthorities().add(new Authority(auth, user)));
-        userRepository.save(user);
         userService.addUserData(user);
+        userRepository.save(user);
 
         var jwt = jwtService.generateToken(user);
         var refreshToken = refreshTokenService.createRefreshToken(user.getUserId());

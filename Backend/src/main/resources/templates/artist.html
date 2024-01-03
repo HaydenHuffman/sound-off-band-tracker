@@ -36,12 +36,20 @@
 </div>
 <div class="" style="display: flex;flex-direction: row; justify-content:center; padding:3em;">
     <div>
-        <form class="artist-edit"
+        <form class="artist-edit add-performance-form"
               th:action="@{/users/{userId}/{artistId}(userId=${artist.user.userId}, artistId=${artist.artistId})}"
               method="post">
-            <label for="name">Artist Name:</label>
-            <div class="artist-field"><input type="text" th:field="${artist.name}" name="name"
-                                             placeholder="Edit Artist Name"/>
+            <div class="artist-field">
+                <label for="name">Artist Name:</label>
+                <input type="text" th:field="${artist.name}" name="name" placeholder="Edit Artist Name"/>
+            </div>
+            <div class="artist-field">
+                <label for="mainContact">Main Contact:</label>
+                <input type="text" th:field="${artist.mainContact}" name="mainContact" placeholder="Add Main Contact"/>
+            </div>
+            <div class="artist-field">
+                <label for="phoneNumber">Contact Phone Number:</label>
+                <input type="text" th:field="${artist.phoneNumber}" name="phoneNumber" placeholder="Add Phone Number"/>
             </div>
             <input type="hidden" th:field="${artist.user.userId}"/>
             <input type="hidden" th:field="${artist.aggScore}"/>
@@ -62,6 +70,8 @@
                    placeholder="Select Date"/>
             <label for="performance-attendance">Total Attendance:</label>
             <input type="number" th:field="*{attendance}" id="performance-attendance" placeholder="Attendance"/>
+            <label for="performance-sales">Total Sales:</label>
+            <input type="number" th:field="*{sales}" id="performance-sales" placeholder="Sales ($)"/>
             <input type="hidden" th:value="${artist.artistId}"/>
             <button style="width:75%;" type="submit" class="add-performance-button form-buttons">
                 Add New Performance
@@ -76,6 +86,7 @@
         <tr>
             <th>Date</th>
             <th>Attendance</th>
+            <th>Sales/Person</th>
             <th>Rating</th>
             <th></th>
         </tr>
@@ -98,7 +109,10 @@
             <label for="performance-attendance">Attendance Count:</label>
             <input type="number" id="performance-attendance"
                    name="attendance" placeholder="Edit Attendance Count"/>
-
+            <br/>
+            <label for="performance-sales">Total Sales:</label>
+            <input type="number" id="performance-sales"
+                   name="sales" placeholder="Adjust Total Sales"/>
             <input type="hidden" id="performance-id" name="performanceId"/>
             <input type="hidden" id="performance-score" name="perfScore"/>
             <input type="hidden" id="performance-artist-id" name="artistId"/>

@@ -126,6 +126,13 @@ main {
   width: 75%; /* Match width of other button containers */
 }
 
+.artist-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
 .artist-header {
   padding-top: 5em;
   display: flex;

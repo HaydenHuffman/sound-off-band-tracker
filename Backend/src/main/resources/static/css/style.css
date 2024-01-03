@@ -58,13 +58,11 @@ footer a {
   text-decoration: none;
 }
 
-
 main {
   margin: 0 auto;
   padding: min(5%, 2.5rem) 0;
   justify-content: center;
 }
-
 
 .actions-column {
   display: flex;
@@ -78,7 +76,6 @@ main {
 .add-artist-button {
   margin-right: 5em;
   height: 45px;
-
 }
 
 .add-performance-form {
@@ -95,8 +92,6 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
-
 }
 
 .artist-delete {
@@ -119,7 +114,12 @@ main {
 
 .artist-edit .form-buttons {
   width: 75%; /* Match width of other button containers */
+}
 
+.artist-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .artist-header {
@@ -147,7 +147,6 @@ main {
 .artist-list {
   display: flex;
   justify-content: center;
-
 }
 
 .artist-performance-display {
@@ -204,6 +203,13 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .create-artist-container {
   margin: 20px auto;
   padding: 20px;
@@ -211,7 +217,6 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background-color: white;
-
 }
 
 .delete-icon {
@@ -316,7 +321,6 @@ main {
 
 .form-buttons {
   display: flex;
-
   justify-content: center;
   width: 100%;
 }
@@ -341,7 +345,6 @@ main {
 
 .form-footer button {
   width: 75%;
-
 }
 
 .intro-logo {
@@ -408,17 +411,16 @@ main {
 
 .performance-edit input {
   width: 80%;
-
 }
 
 .performance-row {
   position: relative;
 }
+
 .submit-changes-button {
   display: flex;
   flex-direction: row;
 }
-
 
 .table-container {
   margin: 20px auto;
@@ -436,7 +438,6 @@ main {
   margin-left: 1em;
   margin-right: 1em;
 }
-
 
 .welcome-header {
   margin-left: 2em;
@@ -475,7 +476,6 @@ main {
   z-index: 5;
 }
 
-
 /* Hide components while empty */
 sl-button, sl-input {
   display: none;
@@ -502,13 +502,11 @@ li {
   .actions-column button {
     flex-direction: column;
     gap: 10px;
-
   }
   .feature-cards {
     flex-direction: column;
     width: 100%;
   }
-
   .intro-section {
     flex-direction: column;
   }

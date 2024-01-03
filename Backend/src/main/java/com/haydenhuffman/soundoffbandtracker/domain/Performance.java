@@ -17,13 +17,21 @@ public class Performance {
     private Artist artist;
     private Double perfScore;
     private Double sales;
-    
+    private Double perPersonAverage;
+
     public Performance() {
     }
 
     public Performance (LocalDate date, Double attendance) {
         this.date = date;
         this.attendance = attendance;
+        this.artist = artist;
+    }
+
+    public Performance(LocalDate date, Double attendance, Double sales) {
+        this.date = date;
+        this.attendance = attendance;
+        this.sales = sales;
         this.artist = artist;
     }
 
@@ -64,6 +72,13 @@ public class Performance {
     public void setSales(Double sales) {
         this.sales = sales;
     }
+    public Double getPerPersonAverage() {
+        return perPersonAverage;
+    }
+    public void setPerPersonAverage(Double perPersonAverage) {
+        this.perPersonAverage = perPersonAverage;
+    }
+
 
 
     @Override

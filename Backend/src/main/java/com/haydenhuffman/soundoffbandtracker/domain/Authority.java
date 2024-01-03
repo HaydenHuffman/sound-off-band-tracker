@@ -17,6 +17,12 @@ public class Authority implements GrantedAuthority {
         this.authority = auth;
         this.user = user;
     }
+
+    public Authority(String authority) {
+        super();
+        this.authority = authority;
+    }
+
     public Authority () {}
 
     @Override
